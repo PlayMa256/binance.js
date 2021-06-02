@@ -14,7 +14,8 @@
     "types": ["node", "@types/jest"],
     "typeRoots": ["./node_modules/@types"],
     "sourceMap": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.test.js"]
