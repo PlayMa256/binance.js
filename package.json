@@ -1,6 +1,6 @@
 {
-  "name": "binance.js",
-  "version": "1.1.1",
+  "name": "universal-binance-api",
+  "version": "1.0.0",
   "description": "An API wrapper for Binance. Build your application faster !",
   "main": "dist/Binance.js",
   "module": "dist/Binance.js",
@@ -20,7 +20,7 @@
     "btc",
     "eth"
   ],
-  "author": "Vincent Riva <vincent.riva@outlook.fr>",
+  "author": "Matheus Silva <matheus.g.silva@hotmail.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/crypto-js": "^4.0.1",
@@ -38,6 +38,6 @@
     "crypto-js": "^4.0.0",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^3.0.0-beta.9",
-    "ws": "^7.3.1"
+    "ws": "^7.4.6"
   }
 }

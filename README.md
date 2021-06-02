@@ -1,6 +1,8 @@
 ![Logo Binance](./docs/logo_binance.png)
 
-# binance.js
+# universal-binance-api
+
+Original project created by @Treast (https://github.com/Treast/universal-binance-api).
 
 An API wrapper for Binance. Build your application faster !
 
@@ -17,15 +19,18 @@ An API wrapper for Binance. Build your application faster !
 **I disclaim all responsibility for any loss, injury, claim, liability, or damage of any kind resulting from, arising out of, or any way related to any errors in or omissions from this library.**
 
 ## Installation
+```
+	npm install -D universal-binance-api
 
-    npm install binance.js --save
+	yarn add -D universal-binance-api
+```
 
 ## Usage
 
 ### Node
 
 ```js
-const { Binance } = require('binance.js');
+const { Binance } = require('universal-binance-api');
 
 const binance = new Binance.Api(API_KEY, TEST_SECRET_KEY, true); // 3rd parameter is testMode. Set explicitly to false if you want to use Live API.
 
@@ -41,7 +46,7 @@ binance
 ### Browser
 
 ```js
-import { Binance } from 'binance.js';
+import { Binance } from 'universal-binance-api';
 
 const binance = new Binance.Api(API_KEY, TEST_SECRET_KEY,  true); // 3rd parameter is testMode. Set explicitly to false if you want to use Live API.
 
