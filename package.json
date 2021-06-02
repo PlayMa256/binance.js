@@ -10,6 +10,12 @@
     "test": "jest"
   },
   "types": "dist/Binance.d.ts",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENCE",
+    "docs/"
+  ],
   "keywords": [
     "binance",
     "binance api",
