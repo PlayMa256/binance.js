@@ -1,4 +1,4 @@
-import fetch = require('node-fetch');
+import fetch = require('isomorphic-fetch');
 import hmacSHA256 = require('crypto-js/hmac-sha256');
 import WebSocket = require('ws');
 
@@ -76,7 +76,7 @@ export namespace Binance {
           method,
           headers,
         })
-          .then((res) => {
+          .then((res: any) => {
             if (res.status === 404) throw new Error('Endpoint not found');
             if (res.status === 401) throw new Error('Forbidden access');
 
