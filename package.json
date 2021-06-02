@@ -9,7 +9,7 @@
     "dev": "tsc -p . -w",
     "test": "jest"
   },
-  "types": "dist/typings/Binance.d.ts",
+  "types": "dist/Binance.d.ts",
   "keywords": [
     "binance",
     "binance api",
