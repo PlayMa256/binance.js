@@ -6,6 +6,8 @@ Original project created by @Treast (https://github.com/Treast/universal-binance
 
 An API wrapper for Binance. Build your application faster !
 
+This fork implements correctly the `isomorphic-fetch` to be able to use this on browser or on node!
+
 ## Benefits
 
 - Built with Typescript (autocomplete on request/response)
