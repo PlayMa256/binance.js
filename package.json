@@ -1,6 +1,6 @@
 {
   "name": "universal-binance-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An API wrapper for Binance. Build your application faster !",
   "main": "dist/Binance.js",
   "module": "dist/Binance.js",

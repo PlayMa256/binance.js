@@ -145,6 +145,10 @@ export class Wallet {
     );
   }
 
+  walletAccountInfo(this: Binance.Api, params = {}) {
+    return this.sendRequest('/api/v3/account', params, Binance.ERequestMethod.GET, Binance.ESecurityType.USER_DATA)
+  }
+
   /**
    * Warning: This function hasn't been tested.
    */

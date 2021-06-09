@@ -139,6 +139,7 @@ export namespace Binance {
     walletWithdraw = Wallet.prototype.walletWithdraw;
     walletDisableFastWithdrawSwitch = Wallet.prototype.walletDisableFastWithdrawSwitch;
     walletEnableFastWithdrawSwitch = Wallet.prototype.walletEnableFastWithdrawSwitch;
+    walletAccountInfo = Wallet.prototype.walletAccountInfo;
 
     /** Market endpoints */
     marketTestConnectivity = Market.prototype.marketTestConnectivity;
