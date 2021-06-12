@@ -15,16 +15,16 @@ import { BSwap } from "./lib/BSwap";
 import { SubAccounts } from "./lib/SubAccount";
 
 export class Binance {
-  private apiKey: string;
-  private secretKey: string;
-  private testMode: boolean;
+   apiKey: string;
+   secretKey: string;
+   testMode: boolean;
 
-  private baseUrlApiLive = "https://api.binance.com";
-  private baseUrlApiTest = "https://testnet.binance.vision";
+   baseUrlApiLive = "https://api.binance.com";
+   baseUrlApiTest = "https://testnet.binance.vision";
 
-  private baseUrlStream = "wss://stream.binance.com:9443";
-  private streams: Map<string, WebSocket> = new Map<string, WebSocket>();
-  private securityTypeRequiringSignature: ESecurityType[] = [
+   baseUrlStream = "wss://stream.binance.com:9443";
+   streams: Map<string, WebSocket> = new Map<string, WebSocket>();
+   securityTypeRequiringSignature: ESecurityType[] = [
     ESecurityType.TRADE,
     ESecurityType.USER_DATA,
     ESecurityType.MARGIN,
@@ -63,7 +63,7 @@ export class Binance {
     this.market = new Market(this.sendRequest);
   }
 
-  private sendRequest<K, T>(
+  sendRequest<K, T>(
     url: string,
     params: K,
     method: ERequestMethod,
@@ -115,7 +115,7 @@ export class Binance {
     });
   }
 
-  private generateQuery(params: IRequestParameters): string {
+  generateQuery(params: IRequestParameters): string {
     return (
       Object.keys(params)
         //@ts-ignore
@@ -124,7 +124,7 @@ export class Binance {
     );
   }
 
-  private defineSecurityType(securityType: ESecurityType): IRequestHeaders {
+  defineSecurityType(securityType: ESecurityType): IRequestHeaders {
     let headers: IRequestHeaders = {
       "Content-Type": "application/json;charset=UTF-8",
     };
@@ -136,7 +136,7 @@ export class Binance {
     return headers;
   }
 
-  protected createStream(url: string) {
+  createStream(url: string) {
     if (this.streams.has(url)) return this.streams.get(url);
 
     const ws = new WebSocket(`${this.baseUrlStream}${url}`);
