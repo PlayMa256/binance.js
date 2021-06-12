@@ -1,168 +1,196 @@
-import { Binance } from '../Binance';
-
+import {
+  Connector,
+  ERequestMethod,
+  ESecurityType,
+  IRequestParameters,
+  IResponseEmpty,
+} from "../Binance";
 export class Wallet {
-  walletDepositHistory(this: Binance.Api, params: IWalletDepositHistoryParameters = {}) {
-    return this.sendRequest<IWalletDepositHistoryParameters, IWalletDepositHistory>(
-      '/wapi/v3/depositHistory.html',
+  connector: Connector;
+
+  constructor(connector: Connector) {
+    this.connector = connector;
+  }
+
+  walletDepositHistory(params: IWalletDepositHistoryParameters = {}) {
+    return this.connector<
+      IWalletDepositHistoryParameters,
+      IWalletDepositHistory
+    >(
+      "/wapi/v3/depositHistory.html",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  walletWithdrawHistory(this: Binance.Api, params: IWalletWithdrawHistoryParameters = {}) {
-    return this.sendRequest<IWalletWithdrawHistoryParameters, IWalletWithdrawHistory>(
-      '/wapi/v3/withdrawHistory.html',
+  walletWithdrawHistory(params: IWalletWithdrawHistoryParameters = {}) {
+    return this.connector<
+      IWalletWithdrawHistoryParameters,
+      IWalletWithdrawHistory
+    >(
+      "/wapi/v3/withdrawHistory.html",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  walletDepositAddress(this: Binance.Api, params: IWalletDepositAddressParameters) {
-    return this.sendRequest<IWalletDepositAddressParameters, IWalletDepositAddress>(
-      '/wapi/v3/depositAddress.html',
+  walletDepositAddress(params: IWalletDepositAddressParameters) {
+    return this.connector<
+      IWalletDepositAddressParameters,
+      IWalletDepositAddress
+    >(
+      "/wapi/v3/depositAddress.html",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  walletAccountStatus(this: Binance.Api, params: Binance.IRequestParameters = {}) {
-    return this.sendRequest<Binance.IRequestParameters, IWalletAccountStatus>(
-      '/wapi/v3/accountStatus.html',
+  walletAccountStatus(params: IRequestParameters = {}) {
+    return this.connector<IRequestParameters, IWalletAccountStatus>(
+      "/wapi/v3/accountStatus.html",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  walletSystemStatus(this: Binance.Api) {
-    return this.sendRequest<Binance.IRequestParameters, IWalletSystemStatus>(
-      '/wapi/v3/systemStatus.html',
+  walletSystemStatus() {
+    return this.connector<IRequestParameters, IWalletSystemStatus>(
+      "/wapi/v3/systemStatus.html",
       {},
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  walletApiTradingStatus(this: Binance.Api, params: Binance.IRequestParameters = {}) {
-    return this.sendRequest<Binance.IRequestParameters, IWalletApiTradingStatus>(
-      '/wapi/v3/apiTradingStatus.html',
+  walletApiTradingStatus(params: IRequestParameters = {}) {
+    return this.connector<IRequestParameters, IWalletApiTradingStatus>(
+      "/wapi/v3/apiTradingStatus.html",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  walletDustLog(this: Binance.Api, params: Binance.IRequestParameters = {}) {
-    return this.sendRequest<Binance.IRequestParameters, IWalletDustLog>(
-      '/wapi/v3/userAssetDribbletLog.html',
+  walletDustLog(params: IRequestParameters = {}) {
+    return this.connector<IRequestParameters, IWalletDustLog>(
+      "/wapi/v3/userAssetDribbletLog.html",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  /**
-   * Warning: This function hasn't been tested.
-   */
-  walletDustTransfer(this: Binance.Api, params: IWalletDustTransferParameters) {
-    return this.sendRequest<IWalletDustTransferParameters, IWalletDustTransfer>(
-      '/sapi/v1/asset/dust',
-      params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  walletTradeFee(this: Binance.Api, params: IWalletTradeFeeParameters = {}) {
-    return this.sendRequest<IWalletTradeFeeParameters, IWalletTradeFee>(
-      '/wapi/v3/tradeFee.html',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  walletAssetDetail(this: Binance.Api, params: Binance.IRequestParameters = {}) {
-    return this.sendRequest<Binance.IRequestParameters, IWalletAssetDetail>(
-      '/wapi/v3/assetDetail.html',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  walletAllCoins(this: Binance.Api, params: Binance.IRequestParameters = {}) {
-    return this.sendRequest<Binance.IRequestParameters, IWalletAllCoins[]>(
-      '/sapi/v1/capital/config/getall',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  walletDailyAccountSnapshot(this: Binance.Api, params: IWalletDailyAccountSnapshotParameters) {
-    return this.sendRequest<IWalletDailyAccountSnapshotParameters, IWalletDailyAccountSnapshot>(
-      '/sapi/v1/accountSnapshot',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  walletAssetDividend(this: Binance.Api, params: IWalletAssetDividendParameters = {}) {
-    return this.sendRequest<IWalletAssetDividendParameters, IWalletAssetDividend>(
-      '/sapi/v1/asset/assetDividend',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  walletWithdraw(this: Binance.Api, params: IWalletWithdrawParameters) {
-    return this.sendRequest<IWalletWithdrawParameters, IWalletWithdraw>(
-      '/sapi/v1/asset/assetDividend',
+  walletDustTransfer(params: IWalletDustTransferParameters) {
+    return this.connector<IWalletDustTransferParameters, IWalletDustTransfer>(
+      "/sapi/v1/asset/dust",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  walletTradeFee(params: IWalletTradeFeeParameters = {}) {
+    return this.connector<IWalletTradeFeeParameters, IWalletTradeFee>(
+      "/wapi/v3/tradeFee.html",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  walletAssetDetail(params: IRequestParameters = {}) {
+    return this.connector<IRequestParameters, IWalletAssetDetail>(
+      "/wapi/v3/assetDetail.html",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  walletAllCoins(params: IRequestParameters = {}) {
+    return this.connector<IRequestParameters, IWalletAllCoins[]>(
+      "/sapi/v1/capital/config/getall",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  walletDailyAccountSnapshot(params: IWalletDailyAccountSnapshotParameters) {
+    return this.connector<
+      IWalletDailyAccountSnapshotParameters,
+      IWalletDailyAccountSnapshot
+    >(
+      "/sapi/v1/accountSnapshot",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  walletAssetDividend(params: IWalletAssetDividendParameters = {}) {
+    return this.connector<IWalletAssetDividendParameters, IWalletAssetDividend>(
+      "/sapi/v1/asset/assetDividend",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  walletDisableFastWithdrawSwitch(this: Binance.Api, params: Binance.IRequestParameters) {
-    return this.sendRequest<Binance.IRequestParameters, Binance.IResponseEmpty>(
-      '/sapi/v1/account/disableFastWithdrawSwitch',
+  walletWithdraw(params: IWalletWithdrawParameters) {
+    return this.connector<IWalletWithdrawParameters, IWalletWithdraw>(
+      "/sapi/v1/asset/assetDividend",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
-  }
-
-  walletAccountInfo(this: Binance.Api, params = {}) {
-    return this.sendRequest('/api/v3/account', params, Binance.ERequestMethod.GET, Binance.ESecurityType.USER_DATA)
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  walletEnableFastWithdrawSwitch(this: Binance.Api, params: Binance.IRequestParameters) {
-    return this.sendRequest<Binance.IRequestParameters, Binance.IResponseEmpty>(
-      '/sapi/v1/account/enableFastWithdrawSwitch',
+  walletDisableFastWithdrawSwitch(params: IRequestParameters) {
+    return this.connector<IRequestParameters, IResponseEmpty>(
+      "/sapi/v1/account/disableFastWithdrawSwitch",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  walletAccountInfo(params = {}) {
+    return this.connector<IRequestParameters, any>(
+      "/api/v3/account",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  /**
+   * Warning: This function hasn't been tested.
+   */
+  walletEnableFastWithdrawSwitch(params: IRequestParameters) {
+    return this.connector<IRequestParameters, IResponseEmpty>(
+      "/sapi/v1/account/enableFastWithdrawSwitch",
+      params,
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 }
 
-export interface IWalletDepositHistoryParameters extends Binance.IRequestParameters {
+export interface IWalletDepositHistoryParameters extends IRequestParameters {
   asset?: string;
   status?: number;
   startTime?: number;
@@ -183,7 +211,7 @@ export interface IWalletDepositHistoryItem {
   status: number;
 }
 
-export interface IWalletWithdrawHistoryParameters extends Binance.IRequestParameters {
+export interface IWalletWithdrawHistoryParameters extends IRequestParameters {
   asset?: string;
   status?: number;
   startTime?: number;
@@ -207,7 +235,7 @@ export interface IWalletWithdrawHistoryItem {
   status: number;
 }
 
-export interface IWalletDepositAddressParameters extends Binance.IRequestParameters {
+export interface IWalletDepositAddressParameters extends IRequestParameters {
   asset: string;
   status?: boolean;
 }
@@ -254,7 +282,7 @@ export interface IWalletDustLog {
   success: boolean;
   results: IWalletDustLogResult;
 }
-export interface IWalletDustTransferParameters extends Binance.IRequestParameters {
+export interface IWalletDustTransferParameters extends IRequestParameters {
   asset: string;
 }
 
@@ -296,7 +324,7 @@ export interface IWalletDustLogResultLog {
   fromAsset: string;
 }
 
-export interface IWalletTradeFeeParameters extends Binance.IRequestParameters {
+export interface IWalletTradeFeeParameters extends IRequestParameters {
   symbol?: string;
 }
 
@@ -361,8 +389,9 @@ export interface IWalletAllCoinsNetwork {
   withdrawMin: string;
 }
 
-export interface IWalletDailyAccountSnapshotParameters extends Binance.IRequestParameters {
-  type: 'SPOT' | 'MARGIN' | 'FUTURES';
+export interface IWalletDailyAccountSnapshotParameters
+  extends IRequestParameters {
+  type: "SPOT" | "MARGIN" | "FUTURES";
   startTime?: number;
   endTime?: number;
   limit?: number;
@@ -391,7 +420,7 @@ export interface IWalletDailyAccountSnapshotDetailsDataBalance {
   locked: string;
 }
 
-export interface IWalletAssetDividendParameters extends Binance.IRequestParameters {
+export interface IWalletAssetDividendParameters extends IRequestParameters {
   asset?: string;
   startTime?: number;
   endTime?: number;
@@ -411,7 +440,7 @@ export interface IWalletAssetDividendItem {
   tranId: number;
 }
 
-export interface IWalletWithdrawParameters extends Binance.IRequestParameters {
+export interface IWalletWithdrawParameters extends IRequestParameters {
   asset: string;
   withdrawOrderId?: string;
   network?: string;

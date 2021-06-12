@@ -1,66 +1,84 @@
-import { Binance } from '../Binance';
+import {
+  Connector,
+  ERequestMethod,
+  ESecurityType,
+  IResponseEmpty,
+} from "../Binance";
 
 export class Mining {
-  miningAcquiringAlgorithm(this: Binance.Api) {
-    return this.sendRequest<Binance.IResponseEmpty, IMiningAcquiringAlgorithm>(
-      '/sapi/v1/mining/pub/algoList',
+  connector: Connector;
+
+  constructor(connector: Connector) {
+    this.connector = connector;
+  }
+  miningAcquiringAlgorithm() {
+    return this.connector<IResponseEmpty, IMiningAcquiringAlgorithm>(
+      "/sapi/v1/mining/pub/algoList",
       {},
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA
     );
   }
 
-  miningAcquiringCoinName(this: Binance.Api) {
-    return this.sendRequest<Binance.IResponseEmpty, IMiningAcquiringCoinName>(
-      '/sapi/v1/mining/pub/coinList',
+  miningAcquiringCoinName() {
+    return this.connector<IResponseEmpty, IMiningAcquiringCoinName>(
+      "/sapi/v1/mining/pub/coinList",
       {},
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA
     );
   }
 
-  miningRequestDetailMinerList(this: Binance.Api, params: IMiningRequestDetailMinerListParameters) {
-    return this.sendRequest<IMiningRequestDetailMinerListParameters, IMiningRequestDetailMinerList>(
-      '/sapi/v1/mining/worker/detail',
+  miningRequestDetailMinerList(
+    params: IMiningRequestDetailMinerListParameters
+  ) {
+    return this.connector<
+      IMiningRequestDetailMinerListParameters,
+      IMiningRequestDetailMinerList
+    >(
+      "/sapi/v1/mining/worker/detail",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  miningRequestMinerList(this: Binance.Api, params: IMiningRequestMinerListParameters) {
-    return this.sendRequest<IMiningRequestMinerListParameters, IMiningRequestMinerList>(
-      '/sapi/v1/mining/worker/list',
+  miningRequestMinerList(params: IMiningRequestMinerListParameters) {
+    return this.connector<
+      IMiningRequestMinerListParameters,
+      IMiningRequestMinerList
+    >(
+      "/sapi/v1/mining/worker/list",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  miningRevenueList(this: Binance.Api, params: IMiningRevenueListParameters) {
-    return this.sendRequest<IMiningRevenueListParameters, IMiningRevenueList>(
-      '/sapi/v1/mining/payment/list',
+  miningRevenueList(params: IMiningRevenueListParameters) {
+    return this.connector<IMiningRevenueListParameters, IMiningRevenueList>(
+      "/sapi/v1/mining/payment/list",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  miningStatisticList(this: Binance.Api, params: IMiningStatisticListParameters) {
-    return this.sendRequest<IMiningStatisticListParameters, IMiningStatisticList>(
-      '/sapi/v1/mining/statistics/user/status',
+  miningStatisticList(params: IMiningStatisticListParameters) {
+    return this.connector<IMiningStatisticListParameters, IMiningStatisticList>(
+      "/sapi/v1/mining/statistics/user/status",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  miningAccountList(this: Binance.Api, params: IMiningAccountListParameters) {
-    return this.sendRequest<IMiningAccountListParameters, IMiningAccountList>(
-      '/sapi/v1/mining/statistics/user/list',
+  miningAccountList(params: IMiningAccountListParameters) {
+    return this.connector<IMiningAccountListParameters, IMiningAccountList>(
+      "/sapi/v1/mining/statistics/user/list",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 }
@@ -219,4 +237,5 @@ export interface IMiningAccountListData {
   list: IMiningAccountListDataList[];
 }
 
-export type IMiningAccountListDataList = IMiningRequestDetailMinerListDataHashrate;
+export type IMiningAccountListDataList =
+  IMiningRequestDetailMinerListDataHashrate;

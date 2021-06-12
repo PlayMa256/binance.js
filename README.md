@@ -34,7 +34,7 @@ This fork implements correctly the `isomorphic-fetch` to be able to use this on 
 ```js
 const { Binance } = require('universal-binance-api');
 
-const binance = new Binance.Api(API_KEY, TEST_SECRET_KEY, true); // 3rd parameter is testMode. Set explicitly to false if you want to use Live API.
+const binance = new Binance(API_KEY, TEST_SECRET_KEY, true); // 3rd parameter is testMode. Set explicitly to false if you want to use Live API.
 
 binance
   .spotAllOrders({
@@ -50,7 +50,7 @@ binance
 ```js
 import { Binance } from 'universal-binance-api';
 
-const binance = new Binance.Api(API_KEY, TEST_SECRET_KEY,  true); // 3rd parameter is testMode. Set explicitly to false if you want to use Live API.
+const binance = new Binance(API_KEY, TEST_SECRET_KEY,  true); // 3rd parameter is testMode. Set explicitly to false if you want to use Live API.
 
 binance
 .spotNewOrder({

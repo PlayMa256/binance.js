@@ -1,145 +1,161 @@
-import { Binance } from '../Binance';
+import {
+  Connector,
+  EOrderResponseType,
+  EOrderSide,
+  EOrderStatus,
+  EOrderTimeInForce,
+  EOrderType,
+  ERequestMethod,
+  ESecurityType,
+  IRequestParameters,
+  IResponseEmpty,
+} from "../Binance";
 
 export class Spot {
-  spotTestNewOrder(this: Binance.Api, params: ISpotNewOrderParameters) {
-    return this.sendRequest<ISpotNewOrderParameters, Binance.IResponseEmpty>(
-      '/api/v3/order/test',
+  connector: Connector;
+
+  constructor(connector: Connector) {
+    this.connector = connector;
+  }
+
+  spotTestNewOrder(params: ISpotNewOrderParameters) {
+    return this.connector<ISpotNewOrderParameters, IResponseEmpty>(
+      "/api/v3/order/test",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.TRADE
+      ERequestMethod.POST,
+      ESecurityType.TRADE
     );
   }
 
-  spotNewOrder(this: Binance.Api, params: ISpotNewOrderParameters) {
-    return this.sendRequest<ISpotNewOrderParameters, ISpotNewOrder>(
-      '/api/v3/order',
+  spotNewOrder(params: ISpotNewOrderParameters) {
+    return this.connector<ISpotNewOrderParameters, ISpotNewOrder>(
+      "/api/v3/order",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.TRADE
+      ERequestMethod.POST,
+      ESecurityType.TRADE
     );
   }
 
-  spotCancelOrder(this: Binance.Api, params: ISpotCancelOrderParameters) {
-    return this.sendRequest<ISpotCancelOrderParameters, ISpotCancelOrder>(
-      '/api/v3/order',
+  spotCancelOrder(params: ISpotCancelOrderParameters) {
+    return this.connector<ISpotCancelOrderParameters, ISpotCancelOrder>(
+      "/api/v3/order",
       params,
-      Binance.ERequestMethod.DELETE,
-      Binance.ESecurityType.TRADE
+      ERequestMethod.DELETE,
+      ESecurityType.TRADE
     );
   }
 
-  spotCancelAllOrdersOnSymbol(this: Binance.Api, params: ISpotCancelAllOrdersOnSymbolParameters) {
-    return this.sendRequest<ISpotCancelAllOrdersOnSymbolParameters, ISpotCancelAllOrdersOnSymbol[]>(
-      '/api/v3/openOrders',
+  spotCancelAllOrdersOnSymbol(params: ISpotCancelAllOrdersOnSymbolParameters) {
+    return this.connector<
+      ISpotCancelAllOrdersOnSymbolParameters,
+      ISpotCancelAllOrdersOnSymbol[]
+    >("/api/v3/openOrders", params, ERequestMethod.DELETE, ESecurityType.TRADE);
+  }
+
+  spotQueryOrder(params: ISpotQueryOrderParameters) {
+    return this.connector<ISpotQueryOrderParameters, ISpotQueryOrder>(
+      "/api/v3/order",
       params,
-      Binance.ERequestMethod.DELETE,
-      Binance.ESecurityType.TRADE
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  spotQueryOrder(this: Binance.Api, params: ISpotQueryOrderParameters) {
-    return this.sendRequest<ISpotQueryOrderParameters, ISpotQueryOrder>(
-      '/api/v3/order',
+  spotCurrentOpenOrders(params: ISpotCurrentOpenOrdersParameters) {
+    return this.connector<
+      ISpotCurrentOpenOrdersParameters,
+      ISpotCurrentOpenOrders[]
+    >(
+      "/api/v3/openOrders",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  spotCurrentOpenOrders(this: Binance.Api, params: ISpotCurrentOpenOrdersParameters) {
-    return this.sendRequest<ISpotCurrentOpenOrdersParameters, ISpotCurrentOpenOrders[]>(
-      '/api/v3/openOrders',
+  spotAllOrders(params: ISpotAllOrdersParameters) {
+    return this.connector<ISpotAllOrdersParameters, ISpotAllOrders[]>(
+      "/api/v3/allOrders",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  spotAllOrders(this: Binance.Api, params: ISpotAllOrdersParameters) {
-    return this.sendRequest<ISpotAllOrdersParameters, ISpotAllOrders[]>(
-      '/api/v3/allOrders',
+  spotNewOCO(params: ISpotNewOCOParameters) {
+    return this.connector<ISpotNewOCOParameters, ISpotNewOCO>(
+      "/api/v3/order/oco",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.TRADE
     );
   }
 
-  spotNewOCO(this: Binance.Api, params: ISpotNewOCOParameters) {
-    return this.sendRequest<ISpotNewOCOParameters, ISpotNewOCO>(
-      '/api/v3/order/oco',
+  spotCancelOCO(params: ISpotCancelOCOParameters) {
+    return this.connector<ISpotCancelOCOParameters, ISpotCancelOCO>(
+      "/api/v3/orderList",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.TRADE
+      ERequestMethod.DELETE,
+      ESecurityType.TRADE
     );
   }
 
-  spotCancelOCO(this: Binance.Api, params: ISpotCancelOCOParameters) {
-    return this.sendRequest<ISpotCancelOCOParameters, ISpotCancelOCO>(
-      '/api/v3/orderList',
+  spotQueryOCO(params: ISpotQueryOCOParameters) {
+    return this.connector<ISpotQueryOCOParameters, ISpotQueryOCO>(
+      "/api/v3/orderList",
       params,
-      Binance.ERequestMethod.DELETE,
-      Binance.ESecurityType.TRADE
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  spotQueryOCO(this: Binance.Api, params: ISpotQueryOCOParameters) {
-    return this.sendRequest<ISpotQueryOCOParameters, ISpotQueryOCO>(
-      '/api/v3/orderList',
+  spotQueryAllOCO(params: ISpotQueryAllOCOParameters = {}) {
+    return this.connector<ISpotQueryAllOCOParameters, ISpotQueryAllOCO[]>(
+      "/api/v3/allOrderList",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  spotQueryAllOCO(this: Binance.Api, params: ISpotQueryAllOCOParameters = {}) {
-    return this.sendRequest<ISpotQueryAllOCOParameters, ISpotQueryAllOCO[]>(
-      '/api/v3/allOrderList',
+  spotQueryOpenOCO(params: IRequestParameters = {}) {
+    return this.connector<IRequestParameters, ISpotQueryOrder[]>(
+      "/api/v3/openOrderList",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  spotQueryOpenOCO(this: Binance.Api, params: Binance.IRequestParameters = {}) {
-    return this.sendRequest<Binance.IRequestParameters, ISpotQueryOrder[]>(
-      '/api/v3/openOrderList',
+  spotAccountInformation(params: IRequestParameters = {}) {
+    return this.connector<IRequestParameters, ISpotAccountInformation>(
+      "/api/v3/account",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  spotAccountInformation(this: Binance.Api, params: Binance.IRequestParameters = {}) {
-    return this.sendRequest<Binance.IRequestParameters, ISpotAccountInformation>(
-      '/api/v3/account',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  spotAccountTradeList(this: Binance.Api, params: ISpotAccountTradeListParameters) {
-    return this.sendRequest<ISpotAccountTradeListParameters, ISpotAccountTradeList[]>(
-      '/api/v3/myTrades',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
+  spotAccountTradeList(params: ISpotAccountTradeListParameters) {
+    return this.connector<
+      ISpotAccountTradeListParameters,
+      ISpotAccountTradeList[]
+    >("/api/v3/myTrades", params, ERequestMethod.GET, ESecurityType.USER_DATA);
   }
 }
 
-export interface ISpotNewOrderParameters extends Binance.IRequestParameters {
+export interface ISpotNewOrderParameters extends IRequestParameters {
   symbol: string;
-  side: Binance.EOrderSide;
-  type: Binance.EOrderType;
-  timeInForce?: Binance.EOrderTimeInForce;
+  side: EOrderSide;
+  type: EOrderType;
+  timeInForce?: EOrderTimeInForce;
   quantity?: number;
   quoteOrderQty?: number;
   price?: number;
   newClientOrderId?: string;
   stopPrice?: number;
   icebergQty?: number;
-  newOrderRespType?: Binance.EOrderResponseType;
+  newOrderRespType?: EOrderResponseType;
 }
 
 export interface ISpotNewOrder {
@@ -153,10 +169,10 @@ export interface ISpotNewOrder {
   origQty?: string;
   executedQty?: string;
   cummulativeQuoteQty?: string;
-  status?: Binance.EOrderStatus;
-  timeInForce?: Binance.EOrderTimeInForce;
-  type?: Binance.EOrderType;
-  side?: Binance.EOrderSide;
+  status?: EOrderStatus;
+  timeInForce?: EOrderTimeInForce;
+  type?: EOrderType;
+  side?: EOrderSide;
   fills?: ISpotNewOrderFill[];
 }
 
@@ -167,7 +183,7 @@ export interface ISpotNewOrderFill {
   commissionAsset: string;
 }
 
-export interface ISpotCancelOrderParameters extends Binance.IRequestParameters {
+export interface ISpotCancelOrderParameters extends IRequestParameters {
   symbol: string;
   orderId?: number;
   origClientOrderId?: number;
@@ -183,13 +199,14 @@ export interface ISpotCancelOrder {
   price: string;
   executedQty: string;
   cummulativeQuoteQty: string;
-  status: Binance.EOrderStatus;
-  timeInForce: Binance.EOrderTimeInForce;
-  type: Binance.EOrderType;
-  side: Binance.EOrderSide;
+  status: EOrderStatus;
+  timeInForce: EOrderTimeInForce;
+  type: EOrderType;
+  side: EOrderSide;
 }
 
-export interface ISpotCancelAllOrdersOnSymbolParameters extends Binance.IRequestParameters {
+export interface ISpotCancelAllOrdersOnSymbolParameters
+  extends IRequestParameters {
   symbol: string;
 }
 
@@ -219,15 +236,15 @@ export interface ISpotCancelAllOrdersOnSymbolOrderReport {
   origQty: string;
   executedQty: string;
   cummulativeQuoteQty: string;
-  status: Binance.EOrderStatus;
-  timeInForce: Binance.EOrderTimeInForce;
-  type: Binance.EOrderType;
-  side: Binance.EOrderSide;
+  status: EOrderStatus;
+  timeInForce: EOrderTimeInForce;
+  type: EOrderType;
+  side: EOrderSide;
   stopPrice: string;
   icebergQty: string;
 }
 
-export interface ISpotQueryOrderParameters extends Binance.IRequestParameters {
+export interface ISpotQueryOrderParameters extends IRequestParameters {
   symbol: string;
   orderId?: number;
   origClientOrderId?: string;
@@ -242,10 +259,10 @@ export interface ISpotQueryOrder {
   origQty: string;
   executedQty: string;
   cummulativeQuoteQty: string;
-  status: Binance.EOrderStatus;
-  timeInForce: Binance.EOrderTimeInForce;
-  type: Binance.EOrderType;
-  side: Binance.EOrderSide;
+  status: EOrderStatus;
+  timeInForce: EOrderTimeInForce;
+  type: EOrderType;
+  side: EOrderSide;
   stopPrice: string;
   icebergQty: string;
   time: number;
@@ -254,13 +271,13 @@ export interface ISpotQueryOrder {
   origQuoteOrderQty: string;
 }
 
-export interface ISpotCurrentOpenOrdersParameters extends Binance.IRequestParameters {
+export interface ISpotCurrentOpenOrdersParameters extends IRequestParameters {
   symbol?: string;
 }
 
 export type ISpotCurrentOpenOrders = ISpotQueryOrder;
 
-export interface ISpotAllOrdersParameters extends Binance.IRequestParameters {
+export interface ISpotAllOrdersParameters extends IRequestParameters {
   symbol: string;
   orderId?: number;
   startTime?: number;
@@ -270,10 +287,10 @@ export interface ISpotAllOrdersParameters extends Binance.IRequestParameters {
 
 export type ISpotAllOrders = ISpotCurrentOpenOrders;
 
-export interface ISpotNewOCOParameters extends Binance.IRequestParameters {
+export interface ISpotNewOCOParameters extends IRequestParameters {
   symbol: string;
   listClientOrderId?: string;
-  side: Binance.EOrderSide;
+  side: EOrderSide;
   quantity: number;
   limitClientOrderId?: string;
   price: number;
@@ -282,8 +299,8 @@ export interface ISpotNewOCOParameters extends Binance.IRequestParameters {
   stopPrice: number;
   stopLimitPrice?: number;
   stopIcebergQty?: number;
-  stopLimitTimeInForce?: Binance.EOrderTimeInForce;
-  newOrderRespType?: Binance.EOrderResponseType;
+  stopLimitTimeInForce?: EOrderTimeInForce;
+  newOrderRespType?: EOrderResponseType;
 }
 
 export interface ISpotNewOCO {
@@ -301,7 +318,7 @@ export interface ISpotNewOCO {
 export type ISpotNewOCOOrder = ISpotCancelAllOrdersOnSymbolOrder;
 export type ISpotNewOCOOrderReport = ISpotCancelAllOrdersOnSymbolOrderReport;
 
-export interface ISpotCancelOCOParameters extends Binance.IRequestParameters {
+export interface ISpotCancelOCOParameters extends IRequestParameters {
   symbol: string;
   orderListId?: number;
   listClientorderId?: string;
@@ -312,7 +329,7 @@ export type ISpotCancelOCO = ISpotNewOCO;
 export type ISpotCancelOCOOrder = ISpotNewOCOOrder;
 export type ISpotCancelOCOOrderReport = ISpotNewOCOOrderReport;
 
-export interface ISpotQueryOCOParameters extends Binance.IRequestParameters {
+export interface ISpotQueryOCOParameters extends IRequestParameters {
   orderListId?: number;
   origClientOrderId?: string;
 }
@@ -330,7 +347,7 @@ export interface ISpotQueryOCO {
 
 export type ISpotQueryOCOOrder = ISpotCancelOCOOrder;
 
-export interface ISpotQueryAllOCOParameters extends Binance.IRequestParameters {
+export interface ISpotQueryAllOCOParameters extends IRequestParameters {
   fromId?: number;
   startTime?: number;
   endTime?: number;
@@ -361,7 +378,7 @@ export interface ISpotAccountInformationBalance {
   locked: string;
 }
 
-export interface ISpotAccountTradeListParameters extends Binance.IRequestParameters {
+export interface ISpotAccountTradeListParameters extends IRequestParameters {
   symbol: string;
   startTime?: number;
   endTime?: number;

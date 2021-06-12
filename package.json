@@ -1,15 +1,15 @@
 {
   "name": "universal-binance-api",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "An API wrapper for Binance. Build your application faster !",
-  "main": "dist/Binance.js",
-  "module": "dist/Binance.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "scripts": {
     "build": "tsc -p .",
     "dev": "tsc -p . -w",
     "test": "jest"
   },
-  "types": "dist/Binance.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/",
     "README.md",

@@ -1,44 +1,56 @@
-import { Binance } from '../Binance';
+import { EInterval, GenerateStream } from "../Binance";
 
 export class Stream {
-  streamAggregateTrade(this: Binance.Api, params: IStreamAggregateTradeParameters) {
-    return this.createStream(`/ws/${params.symbol.toLowerCase()}@aggTrade`);
+  stream: GenerateStream;
+
+  constructor(stream: GenerateStream) {
+    this.stream = stream;
   }
 
-  streamTrade(this: Binance.Api, params: IStreamTradeParameters) {
-    return this.createStream(`/ws/${params.symbol.toLowerCase()}@trade`);
+  streamAggregateTrade(params: IStreamAggregateTradeParameters) {
+    return this.stream(`/ws/${params.symbol.toLowerCase()}@aggTrade`);
   }
 
-  streamCandlestick(this: Binance.Api, params: IStreamCandlestickParameters) {
-    return this.createStream(`/ws/${params.symbol.toLowerCase()}@kline_${params.interval}`);
+  streamTrade(params: IStreamTradeParameters) {
+    return this.stream(`/ws/${params.symbol.toLowerCase()}@trade`);
   }
 
-  streamIndividualSymbolMiniTicker(this: Binance.Api, params: IStreamSymbolMiniTicker) {
-    return this.createStream(`/ws/${params.symbol.toLowerCase()}@miniTicker`);
+  streamCandlestick(params: IStreamCandlestickParameters) {
+    return this.stream(
+      `/ws/${params.symbol.toLowerCase()}@kline_${params.interval}`
+    );
   }
 
-  streamAllMarketMiniTickers(this: Binance.Api) {
-    return this.createStream(`/ws/!miniTicker@arr`);
+  streamIndividualSymbolMiniTicker(params: IStreamSymbolMiniTicker) {
+    return this.stream(`/ws/${params.symbol.toLowerCase()}@miniTicker`);
   }
 
-  streamIndividualSymbolTicker(this: Binance.Api, params: IStreamSymbolTicker) {
-    return this.createStream(`/ws/${params.symbol.toLowerCase()}@ticker`);
+  streamAllMarketMiniTickers() {
+    return this.stream(`/ws/!miniTicker@arr`);
   }
 
-  streamAllMarketTickers(this: Binance.Api) {
-    return this.createStream(`/ws/!ticker@arr`);
+  streamIndividualSymbolTicker(params: IStreamSymbolTicker) {
+    return this.stream(`/ws/${params.symbol.toLowerCase()}@ticker`);
   }
 
-  streamIndividualSymbolBookTicker(this: Binance.Api, params: IStreamSymbolBookTicker) {
-    return this.createStream(`/ws/${params.symbol.toLowerCase()}@bookTicker`);
+  streamAllMarketTickers() {
+    return this.stream(`/ws/!ticker@arr`);
   }
 
-  streamAllBookTickers(this: Binance.Api) {
-    return this.createStream(`/ws/!bookTicker`);
+  streamIndividualSymbolBookTicker(params: IStreamSymbolBookTicker) {
+    return this.stream(`/ws/${params.symbol.toLowerCase()}@bookTicker`);
   }
 
-  streamPartialBookDepth(this: Binance.Api, params: IStreamPartialBookDepth) {
-    return this.createStream(`/ws/${params.symbol.toLowerCase()}@depth${params.levels}${params.updateSpeed ? `@${params.updateSpeed}ms` : ''}`);
+  streamAllBookTickers() {
+    return this.stream(`/ws/!bookTicker`);
+  }
+
+  streamPartialBookDepth(params: IStreamPartialBookDepth) {
+    return this.stream(
+      `/ws/${params.symbol.toLowerCase()}@depth${params.levels}${
+        params.updateSpeed ? `@${params.updateSpeed}ms` : ""
+      }`
+    );
   }
 }
 
@@ -50,7 +62,7 @@ export type IStreamTradeParameters = IStreamAggregateTradeParameters;
 
 export interface IStreamCandlestickParameters {
   symbol: string;
-  interval: Binance.EInterval;
+  interval: EInterval;
 }
 
 export type IStreamSymbolMiniTicker = IStreamAggregateTradeParameters;

@@ -1,12 +1,23 @@
-import { Binance } from '../Binance';
+import {
+  Connector,
+  ERequestMethod,
+  ESecurityType,
+  IRequestParameters,
+} from "../Binance";
 
 export class BLVT {
-  blvtGetBLVTInfo(this: Binance.Api, params: IBLVTGetBLVTInfoParameters = {}) {
-    return this.sendRequest<IBLVTGetBLVTInfoParameters, IBLVTGetBLVTInfo[]>(
-      '/sapi/v1/blvt/tokenInfo',
+  connector: Connector;
+
+  constructor(connector: Connector) {
+    this.connector = connector;
+  }
+
+  blvtGetBLVTInfo(params: IBLVTGetBLVTInfoParameters = {}) {
+    return this.connector<IBLVTGetBLVTInfoParameters, IBLVTGetBLVTInfo[]>(
+      "/sapi/v1/blvt/tokenInfo",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
@@ -14,47 +25,55 @@ export class BLVT {
   /**
    * Warning: This function hasn't been tested.
    */
-  blvtSubscribeBLVT(this: Binance.Api, params: IBLVTSubscribeBLVTParameters) {
-    return this.sendRequest<IBLVTSubscribeBLVTParameters, IBLVTSubscribeBLVT>(
-      '/sapi/v1/blvt/subscribe',
+  blvtSubscribeBLVT(params: IBLVTSubscribeBLVTParameters) {
+    return this.connector<IBLVTSubscribeBLVTParameters, IBLVTSubscribeBLVT>(
+      "/sapi/v1/blvt/subscribe",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
-  blvtQuerySubscriptionRecord(this: Binance.Api, params: IBLVTQuerySubscriptionRecordParameters = {}) {
-    return this.sendRequest<IBLVTQuerySubscriptionRecordParameters, IBLVTQuerySubscriptionRecord[]>(
-      '/sapi/v1/blvt/subscribe/record',
+  blvtQuerySubscriptionRecord(
+    params: IBLVTQuerySubscriptionRecordParameters = {}
+  ) {
+    return this.connector<
+      IBLVTQuerySubscriptionRecordParameters,
+      IBLVTQuerySubscriptionRecord[]
+    >(
+      "/sapi/v1/blvt/subscribe/record",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  blvtRedeemBLVT(this: Binance.Api, params: IBLVTRedeemBLVTParameters) {
-    return this.sendRequest<IBLVTRedeemBLVTParameters, IBLVTRedeemBLVT>(
-      '/sapi/v1/blvt/redeem',
+  blvtRedeemBLVT(params: IBLVTRedeemBLVTParameters) {
+    return this.connector<IBLVTRedeemBLVTParameters, IBLVTRedeemBLVT>(
+      "/sapi/v1/blvt/redeem",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
-  blvtQueryRedemptionRecord(this: Binance.Api, params: IBLVTQueryRedemptionRecordParameters = {}) {
-    return this.sendRequest<IBLVTQueryRedemptionRecordParameters, IBLVTQueryRedemptionRecord[]>(
-      '/sapi/v1/blvt/redeem/record',
+  blvtQueryRedemptionRecord(params: IBLVTQueryRedemptionRecordParameters = {}) {
+    return this.connector<
+      IBLVTQueryRedemptionRecordParameters,
+      IBLVTQueryRedemptionRecord[]
+    >(
+      "/sapi/v1/blvt/redeem/record",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 }
 
-export interface IBLVTGetBLVTInfoParameters extends Binance.IRequestParameters {
+export interface IBLVTGetBLVTInfoParameters extends IRequestParameters {
   tokenName?: string;
 }
 
@@ -71,7 +90,7 @@ export interface IBLVTGetBLVTInfo {
   timestamp: number;
 }
 
-export interface IBLVTSubscribeBLVTParameters extends Binance.IRequestParameters {
+export interface IBLVTSubscribeBLVTParameters extends IRequestParameters {
   tokenName: string;
   cost: number;
 }
@@ -85,7 +104,8 @@ export interface IBLVTSubscribeBLVT {
   timestamp: number;
 }
 
-export interface IBLVTQuerySubscriptionRecordParameters extends Binance.IRequestParameters {
+export interface IBLVTQuerySubscriptionRecordParameters
+  extends IRequestParameters {
   tokenName?: string;
   id?: number;
   startTime?: number;
@@ -103,7 +123,7 @@ export interface IBLVTQuerySubscriptionRecord {
   timestamp: number;
 }
 
-export interface IBLVTRedeemBLVTParameters extends Binance.IRequestParameters {
+export interface IBLVTRedeemBLVTParameters extends IRequestParameters {
   tokenName: string;
   amount: number;
 }
@@ -117,7 +137,8 @@ export interface IBLVTRedeemBLVT {
   timestamp: number;
 }
 
-export interface IBLVTQueryRedemptionRecordParameters extends Binance.IRequestParameters {
+export interface IBLVTQueryRedemptionRecordParameters
+  extends IRequestParameters {
   tokenName?: string;
   id?: number;
   startTime?: number;

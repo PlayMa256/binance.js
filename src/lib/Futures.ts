@@ -1,150 +1,226 @@
-import { Binance } from '../Binance';
+import {
+  Connector,
+  EFuturesType,
+  ERequestMethod,
+  ESecurityType,
+  IRequestParameters,
+} from "../Binance";
 
 export class Futures {
+  connector: Connector;
+
+  constructor(connector: Connector) {
+    this.connector = connector;
+  }
   /**
    * Warning: This function hasn't been tested.
    */
-  futuresNewFutureAccountTransfer(this: Binance.Api, params: IFuturesNewFutureAccountTransferParameters) {
-    return this.sendRequest<IFuturesNewFutureAccountTransferParameters, IFuturesNewFutureAccountTransfer>(
-      '/sapi/v1/futures/transfer',
+  futuresNewFutureAccountTransfer(
+    params: IFuturesNewFutureAccountTransferParameters
+  ) {
+    return this.connector<
+      IFuturesNewFutureAccountTransferParameters,
+      IFuturesNewFutureAccountTransfer
+    >(
+      "/sapi/v1/futures/transfer",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.FUTURES
+      ERequestMethod.POST,
+      ESecurityType.FUTURES
     );
   }
 
-  futuresGetFutureAccountTransactionHistoryList(this: Binance.Api, params: IFuturesGetFutureAccountTransactionHistoryListParameters) {
-    return this.sendRequest<IFuturesGetFutureAccountTransactionHistoryListParameters, IFuturesGetFutureAccountTransactionHistoryList>(
-      '/sapi/v1/futures/transfer',
+  futuresGetFutureAccountTransactionHistoryList(
+    params: IFuturesGetFutureAccountTransactionHistoryListParameters
+  ) {
+    return this.connector<
+      IFuturesGetFutureAccountTransactionHistoryListParameters,
+      IFuturesGetFutureAccountTransactionHistoryList
+    >(
+      "/sapi/v1/futures/transfer",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  /**
-   * Warning: This function hasn't been tested.
-   */
-  futuresBorrowCrossCollateral(this: Binance.Api, params: IFuturesBorrowCrossCollateralParameters) {
-    return this.sendRequest<IFuturesBorrowCrossCollateralParameters, IFuturesBorrowCrossCollateral>(
-      '/sapi/v1/futures/loan/borrow',
-      params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.TRADE
-    );
-  }
-
-  futuresCrossCollateralBorrowHistory(this: Binance.Api, params: IFuturesCrossCollateralBorrowHistoryParameters = {}) {
-    return this.sendRequest<IFuturesCrossCollateralBorrowHistoryParameters, IFuturesCrossCollateralBorrowHistory>(
-      '/sapi/v1/futures/loan/borrow/history',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  futuresRepayCrossCollateral(this: Binance.Api, params: IFuturesRepayCrossCollateralParameters) {
-    return this.sendRequest<IFuturesRepayCrossCollateralParameters, IFuturesRepayCrossCollateral>(
-      '/sapi/v1/futures/loan/repay',
+  futuresBorrowCrossCollateral(
+    params: IFuturesBorrowCrossCollateralParameters
+  ) {
+    return this.connector<
+      IFuturesBorrowCrossCollateralParameters,
+      IFuturesBorrowCrossCollateral
+    >(
+      "/sapi/v1/futures/loan/borrow",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.TRADE
+      ERequestMethod.POST,
+      ESecurityType.TRADE
     );
   }
 
-  futuresCrossCollateralRepaymentHistory(this: Binance.Api, params: IFuturesCrossCollateralRepaymentHistoryParameters = {}) {
-    return this.sendRequest<IFuturesCrossCollateralRepaymentHistoryParameters, IFuturesCrossCollateralRepaymentHistory>(
-      '/sapi/v1/futures/loan/repay/history',
+  futuresCrossCollateralBorrowHistory(
+    params: IFuturesCrossCollateralBorrowHistoryParameters = {}
+  ) {
+    return this.connector<
+      IFuturesCrossCollateralBorrowHistoryParameters,
+      IFuturesCrossCollateralBorrowHistory
+    >(
+      "/sapi/v1/futures/loan/borrow/history",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  futuresCrossCollateralWallet(this: Binance.Api, params: IFuturesCrossCollateralWalletParameters = {}) {
-    return this.sendRequest<IFuturesCrossCollateralWalletParameters, IFuturesCrossCollateralWallet>(
-      '/sapi/v1/futures/loan/wallet',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  futuresCrossCollateralInformation(this: Binance.Api, params: IFuturesCrossCollateralInformationParameters = {}) {
-    return this.sendRequest<IFuturesCrossCollateralInformationParameters, IFuturesCrossCollateralInformation[]>(
-      '/sapi/v1/futures/loan/configs',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  futuresCalculateRateAfterAdjustCrossCollateralLTV(this: Binance.Api, params: IFuturesCalculateRateAfterAdjustCrossCollateralLTVParameters) {
-    return this.sendRequest<IFuturesCalculateRateAfterAdjustCrossCollateralLTVParameters, IFuturesCalculateRateAfterAdjustCrossCollateralLTV>(
-      '/sapi/v1/futures/loan/calcAdjustLevel',
+  futuresRepayCrossCollateral(params: IFuturesRepayCrossCollateralParameters) {
+    return this.connector<
+      IFuturesRepayCrossCollateralParameters,
+      IFuturesRepayCrossCollateral
+    >(
+      "/sapi/v1/futures/loan/repay",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.TRADE
     );
   }
 
-  futuresGetMaxAmountAdjustCrossCollateralLTV(this: Binance.Api, params: IFuturesGetMaxAmountAdjustCrossCollateralLTVParameters) {
-    return this.sendRequest<IFuturesGetMaxAmountAdjustCrossCollateralLTVParameters, IFuturesGetMaxAmountAdjustCrossCollateralLTV>(
-      '/sapi/v1/futures/loan/calcMaxAdjustAmount',
+  futuresCrossCollateralRepaymentHistory(
+    params: IFuturesCrossCollateralRepaymentHistoryParameters = {}
+  ) {
+    return this.connector<
+      IFuturesCrossCollateralRepaymentHistoryParameters,
+      IFuturesCrossCollateralRepaymentHistory
+    >(
+      "/sapi/v1/futures/loan/repay/history",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  futuresCrossCollateralWallet(
+    params: IFuturesCrossCollateralWalletParameters = {}
+  ) {
+    return this.connector<
+      IFuturesCrossCollateralWalletParameters,
+      IFuturesCrossCollateralWallet
+    >(
+      "/sapi/v1/futures/loan/wallet",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  futuresCrossCollateralInformation(
+    params: IFuturesCrossCollateralInformationParameters = {}
+  ) {
+    return this.connector<
+      IFuturesCrossCollateralInformationParameters,
+      IFuturesCrossCollateralInformation[]
+    >(
+      "/sapi/v1/futures/loan/configs",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  futuresAdjustCrossCollateralLTV(this: Binance.Api, params: IFuturesAdjustCrossCollateralLTVParameters) {
-    return this.sendRequest<IFuturesAdjustCrossCollateralLTVParameters, IFuturesAdjustCrossCollateralLTV>(
-      '/sapi/v1/futures/loan/adjustCollateral',
+  futuresCalculateRateAfterAdjustCrossCollateralLTV(
+    params: IFuturesCalculateRateAfterAdjustCrossCollateralLTVParameters
+  ) {
+    return this.connector<
+      IFuturesCalculateRateAfterAdjustCrossCollateralLTVParameters,
+      IFuturesCalculateRateAfterAdjustCrossCollateralLTV
+    >(
+      "/sapi/v1/futures/loan/calcAdjustLevel",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.TRADE
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  futuresAdjustCrossCollateralLTVHistory(this: Binance.Api, params: IFuturesAdjustCrossCollateralLTVHistoryParameters = {}) {
-    return this.sendRequest<IFuturesAdjustCrossCollateralLTVHistoryParameters, IFuturesAdjustCrossCollateralLTVHistory>(
-      '/sapi/v1/futures/loan/adjustCollateral/history',
+  futuresGetMaxAmountAdjustCrossCollateralLTV(
+    params: IFuturesGetMaxAmountAdjustCrossCollateralLTVParameters
+  ) {
+    return this.connector<
+      IFuturesGetMaxAmountAdjustCrossCollateralLTVParameters,
+      IFuturesGetMaxAmountAdjustCrossCollateralLTV
+    >(
+      "/sapi/v1/futures/loan/calcMaxAdjustAmount",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  futuresCrossCollateralLiquidationHistory(this: Binance.Api, params: IFuturesCrossCollateralLiquidationHistoryParameters = {}) {
-    return this.sendRequest<IFuturesCrossCollateralLiquidationHistoryParameters, IFuturesCrossCollateralLiquidationHistory>(
-      '/sapi/v1/futures/loan/liquidationHistory',
+  /**
+   * Warning: This function hasn't been tested.
+   */
+  futuresAdjustCrossCollateralLTV(
+    params: IFuturesAdjustCrossCollateralLTVParameters
+  ) {
+    return this.connector<
+      IFuturesAdjustCrossCollateralLTVParameters,
+      IFuturesAdjustCrossCollateralLTV
+    >(
+      "/sapi/v1/futures/loan/adjustCollateral",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.TRADE
+    );
+  }
+
+  futuresAdjustCrossCollateralLTVHistory(
+    params: IFuturesAdjustCrossCollateralLTVHistoryParameters = {}
+  ) {
+    return this.connector<
+      IFuturesAdjustCrossCollateralLTVHistoryParameters,
+      IFuturesAdjustCrossCollateralLTVHistory
+    >(
+      "/sapi/v1/futures/loan/adjustCollateral/history",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  futuresCrossCollateralLiquidationHistory(
+    params: IFuturesCrossCollateralLiquidationHistoryParameters = {}
+  ) {
+    return this.connector<
+      IFuturesCrossCollateralLiquidationHistoryParameters,
+      IFuturesCrossCollateralLiquidationHistory
+    >(
+      "/sapi/v1/futures/loan/liquidationHistory",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 }
 
-export interface IFuturesNewFutureAccountTransferParameters extends Binance.IRequestParameters {
+export interface IFuturesNewFutureAccountTransferParameters
+  extends IRequestParameters {
   asset: string;
   amount: number;
-  type: Binance.EFuturesType;
+  type: EFuturesType;
 }
 
 export interface IFuturesNewFutureAccountTransfer {
   tranId: number;
 }
 
-export interface IFuturesGetFutureAccountTransactionHistoryListParameters extends Binance.IRequestParameters {
+export interface IFuturesGetFutureAccountTransactionHistoryListParameters
+  extends IRequestParameters {
   asset: string;
   startTime: number;
   endTime?: number;
@@ -166,7 +242,8 @@ export interface IFuturesGetFutureAccountTransactionHistoryListRow {
   status: string;
 }
 
-export interface IFuturesBorrowCrossCollateralParameters extends Binance.IRequestParameters {
+export interface IFuturesBorrowCrossCollateralParameters
+  extends IRequestParameters {
   coin: string;
   amount?: number;
   collateralCoin?: string;
@@ -182,7 +259,8 @@ export interface IFuturesBorrowCrossCollateral {
   borrowId: string;
 }
 
-export interface IFuturesCrossCollateralBorrowHistoryParameters extends Binance.IRequestParameters {
+export interface IFuturesCrossCollateralBorrowHistoryParameters
+  extends IRequestParameters {
   coin?: string;
   startTime?: number;
   endTime?: number;
@@ -207,7 +285,8 @@ export interface IFuturesCrossCollateralBorrowHistoryRow {
   borrowId: string;
 }
 
-export interface IFuturesRepayCrossCollateralParameters extends Binance.IRequestParameters {
+export interface IFuturesRepayCrossCollateralParameters
+  extends IRequestParameters {
   coin: string;
   collateralCoin: string;
   amount: number;
@@ -220,7 +299,8 @@ export interface IFuturesRepayCrossCollateral {
   repayId: string;
 }
 
-export interface IFuturesCrossCollateralRepaymentHistoryParameters extends Binance.IRequestParameters {
+export interface IFuturesCrossCollateralRepaymentHistoryParameters
+  extends IRequestParameters {
   coin?: string;
   startTime?: number;
   endTime?: number;
@@ -243,7 +323,7 @@ export interface IFuturesCrossCollateralRepaymentHistoryRow {
   repayId: string;
 }
 
-export type IFuturesCrossCollateralWalletParameters = Binance.IRequestParameters;
+export type IFuturesCrossCollateralWalletParameters = IRequestParameters;
 
 export interface IFuturesCrossCollateralWallet {
   totalCrossCollateral: string;
@@ -259,7 +339,8 @@ export interface IFuturesCrossCollateralWalletCrossCollateral {
   currentCollateralRate: string;
 }
 
-export interface IFuturesCrossCollateralInformationParameters extends Binance.IRequestParameters {
+export interface IFuturesCrossCollateralInformationParameters
+  extends IRequestParameters {
   collateralCoin?: string;
 }
 
@@ -271,17 +352,19 @@ export interface IFuturesCrossCollateralInformation {
   currentCollateralRate: string;
 }
 
-export interface IFuturesCalculateRateAfterAdjustCrossCollateralLTVParameters extends Binance.IRequestParameters {
+export interface IFuturesCalculateRateAfterAdjustCrossCollateralLTVParameters
+  extends IRequestParameters {
   collateralCoin: string;
   amount: number;
-  direction: 'ADDITIONAL' | 'REDUCED';
+  direction: "ADDITIONAL" | "REDUCED";
 }
 
 export interface IFuturesCalculateRateAfterAdjustCrossCollateralLTV {
   afterCollateralRate: string;
 }
 
-export interface IFuturesGetMaxAmountAdjustCrossCollateralLTVParameters extends Binance.IRequestParameters {
+export interface IFuturesGetMaxAmountAdjustCrossCollateralLTVParameters
+  extends IRequestParameters {
   collateralCoin: string;
 }
 
@@ -290,10 +373,11 @@ export interface IFuturesGetMaxAmountAdjustCrossCollateralLTV {
   maxOutAmount: string;
 }
 
-export interface IFuturesAdjustCrossCollateralLTVParameters extends Binance.IRequestParameters {
+export interface IFuturesAdjustCrossCollateralLTVParameters
+  extends IRequestParameters {
   collateralCoin: string;
   amount: number;
-  direction: 'ADDITIONAL' | 'REDUCED';
+  direction: "ADDITIONAL" | "REDUCED";
 }
 
 export interface IFuturesAdjustCrossCollateralLTV {
@@ -303,7 +387,8 @@ export interface IFuturesAdjustCrossCollateralLTV {
   time: number;
 }
 
-export interface IFuturesAdjustCrossCollateralLTVHistoryParameters extends Binance.IRequestParameters {
+export interface IFuturesAdjustCrossCollateralLTVHistoryParameters
+  extends IRequestParameters {
   collateralCoin?: string;
   startTime?: number;
   endTime?: number;
@@ -326,7 +411,8 @@ export interface IFuturesAdjustCrossCollateralLTVHistoryRow {
   adjustTime: number;
 }
 
-export interface IFuturesCrossCollateralLiquidationHistoryParameters extends Binance.IRequestParameters {
+export interface IFuturesCrossCollateralLiquidationHistoryParameters
+  extends IRequestParameters {
   collateralCoin?: string;
   startTime?: number;
   endTime?: number;

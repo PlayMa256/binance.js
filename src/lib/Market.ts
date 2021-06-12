@@ -1,122 +1,158 @@
-import { Binance } from '../Binance';
+import {
+  Connector,
+  ERequestMethod,
+  ESecurityType,
+  IRequestParameters,
+  IResponseEmpty,
+} from "../Binance";
 
 export class Market {
-  marketTestConnectivity(this: Binance.Api) {
-    return this.sendRequest<Binance.IRequestParameters, Binance.IResponseEmpty>(
-      '/api/v3/ping',
+  connector: Connector;
+
+  constructor(connector: Connector) {
+    this.connector = connector;
+  }
+  marketTestConnectivity() {
+    return this.connector<IRequestParameters, IResponseEmpty>(
+      "/api/v3/ping",
       {},
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
 
-  marketCheckServerTime(this: Binance.Api) {
-    return this.sendRequest<Binance.IRequestParameters, IMarketCheckServerTime>(
-      '/api/v3/time',
+  marketCheckServerTime() {
+    return this.connector<IRequestParameters, IMarketCheckServerTime>(
+      "/api/v3/time",
       {},
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
 
-  marketExchangeInformation(this: Binance.Api) {
-    return this.sendRequest<Binance.IRequestParameters, IMarketExchangeInformation>(
-      '/api/v3/exchangeInfo',
+  marketExchangeInformation() {
+    return this.connector<IRequestParameters, IMarketExchangeInformation>(
+      "/api/v3/exchangeInfo",
       {},
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
 
-  marketOrderBook(this: Binance.Api, params: IMarketOrderBookParameters) {
-    return this.sendRequest<IMarketOrderBookParameters, IMarketOrderBook>(
-      '/api/v3/depth',
+  marketOrderBook(params: IMarketOrderBookParameters) {
+    return this.connector<IMarketOrderBookParameters, IMarketOrderBook>(
+      "/api/v3/depth",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
 
-  marketRecentTradesList(this: Binance.Api, params: IMarketRecentTradesListParameters) {
-    return this.sendRequest<IMarketRecentTradesListParameters, IMarketRecentTradesList[]>(
-      '/api/v3/trades',
+  marketRecentTradesList(params: IMarketRecentTradesListParameters) {
+    return this.connector<
+      IMarketRecentTradesListParameters,
+      IMarketRecentTradesList[]
+    >(
+      "/api/v3/trades",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
 
-  marketOldTradeLookup(this: Binance.Api, params: IMarketOldTradeLookupParameters) {
-    return this.sendRequest<IMarketOldTradeLookupParameters, IMarketOldTradeLookup[]>(
-      '/api/v3/historicalTrades',
+  marketOldTradeLookup(params: IMarketOldTradeLookupParameters) {
+    return this.connector<
+      IMarketOldTradeLookupParameters,
+      IMarketOldTradeLookup[]
+    >(
+      "/api/v3/historicalTrades",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
 
-  marketAggregateTradesList(this: Binance.Api, params: IMarketAggregateTradesListParameters) {
-    return this.sendRequest<IMarketAggregateTradesListParameters, IMarketAggregateTradesList[]>(
-      '/api/v3/aggTrades',
+  marketAggregateTradesList(params: IMarketAggregateTradesListParameters) {
+    return this.connector<
+      IMarketAggregateTradesListParameters,
+      IMarketAggregateTradesList[]
+    >(
+      "/api/v3/aggTrades",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
 
-  marketKlineData(this: Binance.Api, params: IMarketKlineDataParameters) {
-    return this.sendRequest<IMarketKlineDataParameters, (number | string)[][]>(
-      '/api/v3/klines',
+  marketKlineData(params: IMarketKlineDataParameters) {
+    return this.connector<IMarketKlineDataParameters, (number | string)[][]>(
+      "/api/v3/klines",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
 
-  marketCurrentAveragePrice(this: Binance.Api, params: IMarketCurrentAveragePriceParameters) {
-    return this.sendRequest<IMarketCurrentAveragePriceParameters, IMarketCurrentAveragePrice>(
-      '/api/v3/avgPrice',
+  marketCurrentAveragePrice(params: IMarketCurrentAveragePriceParameters) {
+    return this.connector<
+      IMarketCurrentAveragePriceParameters,
+      IMarketCurrentAveragePrice
+    >(
+      "/api/v3/avgPrice",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
 
-  market24hrTickerPriceChange(this: Binance.Api, params: IMarket24hTickerPriceChangeParameters = {}) {
-    return this.sendRequest<IMarket24hTickerPriceChangeParameters, IMarket24hTickerPriceChange | IMarket24hTickerPriceChange[]>(
-      '/api/v3/ticker/24hr',
+  market24hrTickerPriceChange(
+    params: IMarket24hTickerPriceChangeParameters = {}
+  ) {
+    return this.connector<
+      IMarket24hTickerPriceChangeParameters,
+      IMarket24hTickerPriceChange | IMarket24hTickerPriceChange[]
+    >(
+      "/api/v3/ticker/24hr",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
 
-  marketSymbolPriceTicker(this: Binance.Api, params: IMarketSymbolPriceTickerParameters = {}) {
-    return this.sendRequest<IMarketSymbolPriceTickerParameters, IMarketSymbolPriceTicker | IMarketSymbolPriceTicker[]>(
-      '/api/v3/ticker/price',
+  marketSymbolPriceTicker(params: IMarketSymbolPriceTickerParameters = {}) {
+    return this.connector<
+      IMarketSymbolPriceTickerParameters,
+      IMarketSymbolPriceTicker | IMarketSymbolPriceTicker[]
+    >(
+      "/api/v3/ticker/price",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
 
-  marketSymbolOrderBookTicker(this: Binance.Api, params: IMarketSymbolOrderBookTickerParameters = {}) {
-    return this.sendRequest<IMarketSymbolOrderBookTickerParameters, IMarketSymbolOrderBookTicker | IMarketSymbolOrderBookTicker[]>(
-      '/api/v3/ticker/bookTicker',
+  marketSymbolOrderBookTicker(
+    params: IMarketSymbolOrderBookTickerParameters = {}
+  ) {
+    return this.connector<
+      IMarketSymbolOrderBookTickerParameters,
+      IMarketSymbolOrderBookTicker | IMarketSymbolOrderBookTicker[]
+    >(
+      "/api/v3/ticker/bookTicker",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA,
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA,
       true
     );
   }
@@ -247,14 +283,16 @@ export interface IMarket24hTickerPriceChange {
   count: number;
 }
 
-export type IMarketSymbolPriceTickerParameters = IMarket24hTickerPriceChangeParameters;
+export type IMarketSymbolPriceTickerParameters =
+  IMarket24hTickerPriceChangeParameters;
 
 export interface IMarketSymbolPriceTicker {
   symbol: string;
   price: string;
 }
 
-export type IMarketSymbolOrderBookTickerParameters = IMarket24hTickerPriceChangeParameters;
+export type IMarketSymbolOrderBookTickerParameters =
+  IMarket24hTickerPriceChangeParameters;
 
 export interface IMarketSymbolOrderBookTicker {
   symbol: string;

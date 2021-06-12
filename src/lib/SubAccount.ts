@@ -1,87 +1,121 @@
-import { Binance } from '../Binance';
+import {
+  Connector,
+  EAccountType,
+  EFuturesType,
+  ERequestMethod,
+  ESecurityType,
+  ESubAccountFuturesType,
+  IRequestParameters,
+} from "../Binance";
 
 export class SubAccounts {
+  connector: Connector;
+
+  constructor(connector: Connector) {
+    this.connector = connector;
+  }
+
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsList(this: Binance.Api) {
-    return this.sendRequest<Binance.IRequestParameters, ISubAccountsList>(
-      '/wapi/v3/sub-account/list.html',
+  subAccountsList() {
+    return this.connector<IRequestParameters, ISubAccountsList>(
+      "/wapi/v3/sub-account/list.html",
       {},
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsTransferHistory(this: Binance.Api) {
-    return this.sendRequest<Binance.IRequestParameters, ISubAccountsList>(
-      '/wapi/v3/sub-account/transfer/history.html',
+  subAccountsTransferHistory() {
+    return this.connector<IRequestParameters, ISubAccountsList>(
+      "/wapi/v3/sub-account/transfer/history.html",
       {},
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsAssets(this: Binance.Api) {
-    return this.sendRequest<Binance.IRequestParameters, ISubAccountsAssets>(
-      '/wapi/v3/sub-account/assets.html',
+  subAccountsAssets() {
+    return this.connector<IRequestParameters, ISubAccountsAssets>(
+      "/wapi/v3/sub-account/assets.html",
       {},
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsCreateVirtualSubAccount(this: Binance.Api, params: ISubAccountsCreateVirtualSubAccountParameters) {
-    return this.sendRequest<ISubAccountsCreateVirtualSubAccountParameters, ISubAccountsCreateVirtualSubAccount>(
-      '/sapi/v1/sub-account/virtualSubAccount',
+  subAccountsCreateVirtualSubAccount(
+    params: ISubAccountsCreateVirtualSubAccountParameters
+  ) {
+    return this.connector<
+      ISubAccountsCreateVirtualSubAccountParameters,
+      ISubAccountsCreateVirtualSubAccount
+    >(
+      "/sapi/v1/sub-account/virtualSubAccount",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsQuerySubAccountListSAPI(this: Binance.Api, params: ISubAccountsQuerySubAccountListSAPIParameters) {
-    return this.sendRequest<ISubAccountsQuerySubAccountListSAPIParameters, ISubAccountsQuerySubAccountListSAPI>(
-      '/sapi/v1/sub-account/list',
+  subAccountsQuerySubAccountListSAPI(
+    params: ISubAccountsQuerySubAccountListSAPIParameters
+  ) {
+    return this.connector<
+      ISubAccountsQuerySubAccountListSAPIParameters,
+      ISubAccountsQuerySubAccountListSAPI
+    >(
+      "/sapi/v1/sub-account/list",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsQuerySubAccountList(this: Binance.Api, params: ISubAccountsQuerySubAccountListParameters) {
-    return this.sendRequest<ISubAccountsQuerySubAccountListParameters, ISubAccountsQuerySubAccountList>(
-      '/wapi/v3/sub-account/list.html',
+  subAccountsQuerySubAccountList(
+    params: ISubAccountsQuerySubAccountListParameters
+  ) {
+    return this.connector<
+      ISubAccountsQuerySubAccountListParameters,
+      ISubAccountsQuerySubAccountList
+    >(
+      "/wapi/v3/sub-account/list.html",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsQuerySubAccountSpotAssetTransferHistory(this: Binance.Api, params: ISubAccountsQuerySubAccountSpotAssetTransferHistoryParameters) {
-    return this.sendRequest<ISubAccountsQuerySubAccountSpotAssetTransferHistoryParameters, ISubAccountsQuerySubAccountSpotAssetTransferHistory>(
-      '/wapi/v3/sub-account/transfer/history.html',
+  subAccountsQuerySubAccountSpotAssetTransferHistory(
+    params: ISubAccountsQuerySubAccountSpotAssetTransferHistoryParameters
+  ) {
+    return this.connector<
+      ISubAccountsQuerySubAccountSpotAssetTransferHistoryParameters,
+      ISubAccountsQuerySubAccountSpotAssetTransferHistory
+    >(
+      "/wapi/v3/sub-account/transfer/history.html",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
@@ -89,336 +123,473 @@ export class SubAccounts {
    * Warning: This function hasn't been tested.
    */
   subAccountsQuerySubAccountSpotAssetTransferHistorySAPI(
-    this: Binance.Api,
     params: ISubAccountsQuerySubAccountSpotAssetTransferHistorySAPIParameters
   ) {
-    return this.sendRequest<
+    return this.connector<
       ISubAccountsQuerySubAccountSpotAssetTransferHistorySAPIParameters,
       ISubAccountsQuerySubAccountSpotAssetTransferHistorySAPI[]
-    >('/sapi/v1/sub-account/sub/transfer/history', params, Binance.ERequestMethod.GET, Binance.ESecurityType.USER_DATA);
-  }
-
-  /**
-   * Warning: This function hasn't been tested.
-   */
-  subAccountsSubAccountSpotAssetTransfer(this: Binance.Api, params: ISubAccountsSubAccountSpotAssetTransferParameters) {
-    return this.sendRequest<ISubAccountsSubAccountSpotAssetTransferParameters, ISubAccountsSubAccountSpotAssetTransfer>(
-      '/wapi/v3/sub-account/transfer.html',
+    >(
+      "/sapi/v1/sub-account/sub/transfer/history",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsQuerySubAccountFuturesAssetTransferHistory(this: Binance.Api, params: ISubAccountsQuerySubAccountFuturesAssetTransferHistoryParameters) {
-    return this.sendRequest<ISubAccountsQuerySubAccountFuturesAssetTransferHistoryParameters, ISubAccountsQuerySubAccountFuturesAssetTransferHistory>(
-      '/sapi/v1/sub-account/futures/internalTransfer',
+  subAccountsSubAccountSpotAssetTransfer(
+    params: ISubAccountsSubAccountSpotAssetTransferParameters
+  ) {
+    return this.connector<
+      ISubAccountsSubAccountSpotAssetTransferParameters,
+      ISubAccountsSubAccountSpotAssetTransfer
+    >(
+      "/wapi/v3/sub-account/transfer.html",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsSubAccountFuturesAssetTransfer(this: Binance.Api, params: ISubAccountsQuerySubAccountFuturesAssetTransferHistoryParameters) {
-    return this.sendRequest<ISubAccountsQuerySubAccountFuturesAssetTransferHistoryParameters, ISubAccountsQuerySubAccountFuturesAssetTransferHistory>(
-      '/sapi/v1/sub-account/futures/internalTransfer',
+  subAccountsQuerySubAccountFuturesAssetTransferHistory(
+    params: ISubAccountsQuerySubAccountFuturesAssetTransferHistoryParameters
+  ) {
+    return this.connector<
+      ISubAccountsQuerySubAccountFuturesAssetTransferHistoryParameters,
+      ISubAccountsQuerySubAccountFuturesAssetTransferHistory
+    >(
+      "/sapi/v1/sub-account/futures/internalTransfer",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsQuerySubAccountsAssets(this: Binance.Api, params: ISubAccountsQuerySubAccountAssetsParameters) {
-    return this.sendRequest<ISubAccountsQuerySubAccountAssetsParameters, ISubAccountsQuerySubAccountAssets>(
-      '/wapi/v3/sub-account/assets.html',
+  subAccountsSubAccountFuturesAssetTransfer(
+    params: ISubAccountsQuerySubAccountFuturesAssetTransferHistoryParameters
+  ) {
+    return this.connector<
+      ISubAccountsQuerySubAccountFuturesAssetTransferHistoryParameters,
+      ISubAccountsQuerySubAccountFuturesAssetTransferHistory
+    >(
+      "/sapi/v1/sub-account/futures/internalTransfer",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsQuerySubAccountsAssetsSAPI(this: Binance.Api, params: ISubAccountsQuerySubAccountAssetsSAPIParameters) {
-    return this.sendRequest<ISubAccountsQuerySubAccountAssetsSAPIParameters, ISubAccountsQuerySubAccountAssetsSAPI>(
-      '/sapi/v3/sub-account/assets',
+  subAccountsQuerySubAccountsAssets(
+    params: ISubAccountsQuerySubAccountAssetsParameters
+  ) {
+    return this.connector<
+      ISubAccountsQuerySubAccountAssetsParameters,
+      ISubAccountsQuerySubAccountAssets
+    >(
+      "/wapi/v3/sub-account/assets.html",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsQuerySubAccountSpotAssetsSummary(this: Binance.Api, params: ISubAccountsQuerySubAccountSpotAssetsSummaryParameters) {
-    return this.sendRequest<ISubAccountsQuerySubAccountSpotAssetsSummaryParameters, ISubAccountsQuerySubAccountSpotAssetsSummary>(
-      '/sapi/v1/sub-account/spotSummary',
+  subAccountsQuerySubAccountsAssetsSAPI(
+    params: ISubAccountsQuerySubAccountAssetsSAPIParameters
+  ) {
+    return this.connector<
+      ISubAccountsQuerySubAccountAssetsSAPIParameters,
+      ISubAccountsQuerySubAccountAssetsSAPI
+    >(
+      "/sapi/v3/sub-account/assets",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsGetSubAccountDepositAddress(this: Binance.Api, params: ISubAccountsGetSubAccountDepositAddressParameters) {
-    return this.sendRequest<ISubAccountsGetSubAccountDepositAddressParameters, ISubAccountsGetSubAccountDepositAddress>(
-      '/sapi/v1/capital/deposit/subAddress',
+  subAccountsQuerySubAccountSpotAssetsSummary(
+    params: ISubAccountsQuerySubAccountSpotAssetsSummaryParameters
+  ) {
+    return this.connector<
+      ISubAccountsQuerySubAccountSpotAssetsSummaryParameters,
+      ISubAccountsQuerySubAccountSpotAssetsSummary
+    >(
+      "/sapi/v1/sub-account/spotSummary",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsGetSubAccountDepositHistory(this: Binance.Api, params: ISubAccountsGetSubAccountDepositAddressHistoryParameters) {
-    return this.sendRequest<ISubAccountsGetSubAccountDepositAddressHistoryParameters, ISubAccountsGetSubAccountDepositAddressHistory[]>(
-      '/sapi/v1/capital/deposit/subHisrec',
+  subAccountsGetSubAccountDepositAddress(
+    params: ISubAccountsGetSubAccountDepositAddressParameters
+  ) {
+    return this.connector<
+      ISubAccountsGetSubAccountDepositAddressParameters,
+      ISubAccountsGetSubAccountDepositAddress
+    >(
+      "/sapi/v1/capital/deposit/subAddress",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsGetSubAccountStatusMarginFutures(this: Binance.Api, params: ISubAccountsGetSubAccountStatusMarginFuturesParameters) {
-    return this.sendRequest<ISubAccountsGetSubAccountStatusMarginFuturesParameters, ISubAccountsGetSubAccountStatusMarginFutures[]>(
-      '/sapi/v1/sub-account/status',
+  subAccountsGetSubAccountDepositHistory(
+    params: ISubAccountsGetSubAccountDepositAddressHistoryParameters
+  ) {
+    return this.connector<
+      ISubAccountsGetSubAccountDepositAddressHistoryParameters,
+      ISubAccountsGetSubAccountDepositAddressHistory[]
+    >(
+      "/sapi/v1/capital/deposit/subHisrec",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsEnableMarginSubAccount(this: Binance.Api, params: ISubAccountsEnableMarginSubAccountParameters) {
-    return this.sendRequest<ISubAccountsEnableMarginSubAccountParameters, ISubAccountsEnableMarginSubAccount>(
-      '/sapi/v1/sub-account/margin/enable',
+  subAccountsGetSubAccountStatusMarginFutures(
+    params: ISubAccountsGetSubAccountStatusMarginFuturesParameters
+  ) {
+    return this.connector<
+      ISubAccountsGetSubAccountStatusMarginFuturesParameters,
+      ISubAccountsGetSubAccountStatusMarginFutures[]
+    >(
+      "/sapi/v1/sub-account/status",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsGetDetailSubAccountMarginAccount(this: Binance.Api, params: ISubAccountsGetDetailSubAccountMarginAccountParameters) {
-    return this.sendRequest<ISubAccountsGetDetailSubAccountMarginAccountParameters, ISubAccountsGetDetailSubAccountMarginAccount>(
-      '/sapi/v1/sub-account/margin/account',
+  subAccountsEnableMarginSubAccount(
+    params: ISubAccountsEnableMarginSubAccountParameters
+  ) {
+    return this.connector<
+      ISubAccountsEnableMarginSubAccountParameters,
+      ISubAccountsEnableMarginSubAccount
+    >(
+      "/sapi/v1/sub-account/margin/enable",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsGetSummarySubAccountMarginAccount(this: Binance.Api, params: ISubAccountsGetSummarySubAccountMarginAccountParameters) {
-    return this.sendRequest<ISubAccountsGetSummarySubAccountMarginAccountParameters, ISubAccountsGetSummarySubAccountMarginAccount>(
-      '/sapi/v1/sub-account/margin/accountSummary',
+  subAccountsGetDetailSubAccountMarginAccount(
+    params: ISubAccountsGetDetailSubAccountMarginAccountParameters
+  ) {
+    return this.connector<
+      ISubAccountsGetDetailSubAccountMarginAccountParameters,
+      ISubAccountsGetDetailSubAccountMarginAccount
+    >(
+      "/sapi/v1/sub-account/margin/account",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsEnableFuturesSubAccount(this: Binance.Api, params: ISubAccountsEnableFuturesSubAccountParameters) {
-    return this.sendRequest<ISubAccountsEnableFuturesSubAccountParameters, ISubAccountsEnableFuturesSubAccount>(
-      '/sapi/v1/sub-account/futures/enable',
+  subAccountsGetSummarySubAccountMarginAccount(
+    params: ISubAccountsGetSummarySubAccountMarginAccountParameters
+  ) {
+    return this.connector<
+      ISubAccountsGetSummarySubAccountMarginAccountParameters,
+      ISubAccountsGetSummarySubAccountMarginAccount
+    >(
+      "/sapi/v1/sub-account/margin/accountSummary",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsGetDetailSubAccountFuturesAccount(this: Binance.Api, params: ISubAccountsGetDetailSubAccountFuturesAccountParameters) {
-    return this.sendRequest<ISubAccountsGetDetailSubAccountFuturesAccountParameters, ISubAccountsGetDetailSubAccountFuturesAccount>(
-      '/sapi/v1/sub-account/futures/account',
+  subAccountsEnableFuturesSubAccount(
+    params: ISubAccountsEnableFuturesSubAccountParameters
+  ) {
+    return this.connector<
+      ISubAccountsEnableFuturesSubAccountParameters,
+      ISubAccountsEnableFuturesSubAccount
+    >(
+      "/sapi/v1/sub-account/futures/enable",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsGetSummarySubAccountFuturesAccount(this: Binance.Api, params: ISubAccountsGetSummarySubAccountFuturesAccountParameters) {
-    return this.sendRequest<ISubAccountsGetSummarySubAccountFuturesAccountParameters, ISubAccountsGetSummarySubAccountFuturesAccount>(
-      '/sapi/v1/sub-account/futures/accountSummary',
+  subAccountsGetDetailSubAccountFuturesAccount(
+    params: ISubAccountsGetDetailSubAccountFuturesAccountParameters
+  ) {
+    return this.connector<
+      ISubAccountsGetDetailSubAccountFuturesAccountParameters,
+      ISubAccountsGetDetailSubAccountFuturesAccount
+    >(
+      "/sapi/v1/sub-account/futures/account",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsGetFuturesPositionRiskSubAccount(this: Binance.Api, params: ISubAccountsGetFuturesPositionRiskSubAccountParameters) {
-    return this.sendRequest<ISubAccountsGetFuturesPositionRiskSubAccountParameters, ISubAccountsGetFuturesPositionRiskSubAccount[]>(
-      '/sapi/v1/sub-account/futures/positionRisk',
+  subAccountsGetSummarySubAccountFuturesAccount(
+    params: ISubAccountsGetSummarySubAccountFuturesAccountParameters
+  ) {
+    return this.connector<
+      ISubAccountsGetSummarySubAccountFuturesAccountParameters,
+      ISubAccountsGetSummarySubAccountFuturesAccount
+    >(
+      "/sapi/v1/sub-account/futures/accountSummary",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsFuturesTransferSubAccount(this: Binance.Api, params: ISubAccountsFuturesTransferSubAccountParameters) {
-    return this.sendRequest<ISubAccountsFuturesTransferSubAccountParameters, ISubAccountsFuturesTransferSubAccount>(
-      '/sapi/v1/sub-account/futures/transfer',
+  subAccountsGetFuturesPositionRiskSubAccount(
+    params: ISubAccountsGetFuturesPositionRiskSubAccountParameters
+  ) {
+    return this.connector<
+      ISubAccountsGetFuturesPositionRiskSubAccountParameters,
+      ISubAccountsGetFuturesPositionRiskSubAccount[]
+    >(
+      "/sapi/v1/sub-account/futures/positionRisk",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsMarginTransferSubAccount(this: Binance.Api, params: ISubAccountsMarginTransferSubAccountParameters) {
-    return this.sendRequest<ISubAccountsMarginTransferSubAccountParameters, ISubAccountsMarginTransferSubAccount>(
-      '/sapi/v1/sub-account/margin/transfer',
+  subAccountsFuturesTransferSubAccount(
+    params: ISubAccountsFuturesTransferSubAccountParameters
+  ) {
+    return this.connector<
+      ISubAccountsFuturesTransferSubAccountParameters,
+      ISubAccountsFuturesTransferSubAccount
+    >(
+      "/sapi/v1/sub-account/futures/transfer",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsTransferSubAccountSameMaster(this: Binance.Api, params: ISubAccountsTransferSubAccountSameMasterParameters) {
-    return this.sendRequest<ISubAccountsTransferSubAccountSameMasterParameters, ISubAccountsTransferSubAccountSameMaster>(
-      '/sapi/v1/sub-account/transfer/subToSub',
+  subAccountsMarginTransferSubAccount(
+    params: ISubAccountsMarginTransferSubAccountParameters
+  ) {
+    return this.connector<
+      ISubAccountsMarginTransferSubAccountParameters,
+      ISubAccountsMarginTransferSubAccount
+    >(
+      "/sapi/v1/sub-account/margin/transfer",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsTransferToMaster(this: Binance.Api, params: ISubAccountsTransferToMasterParameters) {
-    return this.sendRequest<ISubAccountsTransferToMasterParameters, ISubAccountsTransferToMaster>(
-      '/sapi/v1/sub-account/transfer/subToMaster',
+  subAccountsTransferSubAccountSameMaster(
+    params: ISubAccountsTransferSubAccountSameMasterParameters
+  ) {
+    return this.connector<
+      ISubAccountsTransferSubAccountSameMasterParameters,
+      ISubAccountsTransferSubAccountSameMaster
+    >(
+      "/sapi/v1/sub-account/transfer/subToSub",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsSubAccountTransferHistory(this: Binance.Api, params: ISubAccountsSubAccountTransferHistoryParameters) {
-    return this.sendRequest<ISubAccountsSubAccountTransferHistoryParameters, ISubAccountsSubAccountTransferHistory[]>(
-      '/sapi/v1/sub-account/transfer/subUserHistory',
+  subAccountsTransferToMaster(params: ISubAccountsTransferToMasterParameters) {
+    return this.connector<
+      ISubAccountsTransferToMasterParameters,
+      ISubAccountsTransferToMaster
+    >(
+      "/sapi/v1/sub-account/transfer/subToMaster",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsUniversalTransfer(this: Binance.Api, params: ISubAccountsUniversalTransferParameters) {
-    return this.sendRequest<ISubAccountsUniversalTransferParameters, ISubAccountsUniversalTransfer>(
-      '/sapi/v1/sub-account/universalTransfer',
+  subAccountsSubAccountTransferHistory(
+    params: ISubAccountsSubAccountTransferHistoryParameters
+  ) {
+    return this.connector<
+      ISubAccountsSubAccountTransferHistoryParameters,
+      ISubAccountsSubAccountTransferHistory[]
+    >(
+      "/sapi/v1/sub-account/transfer/subUserHistory",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsQueryUniversalTransferHistory(this: Binance.Api, params: ISubAccountsQueryUniversalTransferHistoryParameters) {
-    return this.sendRequest<ISubAccountsQueryUniversalTransferHistoryParameters, ISubAccountsQueryUniversalTransferHistory[]>(
-      '/sapi/v1/sub-account/universalTransfer',
+  subAccountsUniversalTransfer(
+    params: ISubAccountsUniversalTransferParameters
+  ) {
+    return this.connector<
+      ISubAccountsUniversalTransferParameters,
+      ISubAccountsUniversalTransfer
+    >(
+      "/sapi/v1/sub-account/universalTransfer",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsGetDetailSubAccountFuturesAccountV2(this: Binance.Api, params: ISubAccountsGetDetailSubAccountFuturesAccountV2Parameters) {
-    return this.sendRequest<ISubAccountsGetDetailSubAccountFuturesAccountV2Parameters, ISubAccountsGetDetailSubAccountFuturesAccountV2>(
-      '/sapi/v2/sub-account/futures/account',
+  subAccountsQueryUniversalTransferHistory(
+    params: ISubAccountsQueryUniversalTransferHistoryParameters
+  ) {
+    return this.connector<
+      ISubAccountsQueryUniversalTransferHistoryParameters,
+      ISubAccountsQueryUniversalTransferHistory[]
+    >(
+      "/sapi/v1/sub-account/universalTransfer",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsGetSummarySubAccountFuturesAccountV2(this: Binance.Api, params: ISubAccountsGetSummarySubAccountFuturesAccountV2Parameters) {
-    return this.sendRequest<ISubAccountsGetSummarySubAccountFuturesAccountV2Parameters, ISubAccountsGetSummarySubAccountFuturesAccountV2>(
-      '/sapi/v2/sub-account/futures/accountSummary',
+  subAccountsGetDetailSubAccountFuturesAccountV2(
+    params: ISubAccountsGetDetailSubAccountFuturesAccountV2Parameters
+  ) {
+    return this.connector<
+      ISubAccountsGetDetailSubAccountFuturesAccountV2Parameters,
+      ISubAccountsGetDetailSubAccountFuturesAccountV2
+    >(
+      "/sapi/v2/sub-account/futures/account",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsGetFuturesPositionRiskSubAccountV2(this: Binance.Api, params: ISubAccountsGetFuturesPositionRiskSubAccountV2Parameters) {
-    return this.sendRequest<ISubAccountsGetFuturesPositionRiskSubAccountV2Parameters, ISubAccountsGetFuturesPositionRiskSubAccountV2>(
-      '/sapi/v2/sub-account/futures/positionRisk',
+  subAccountsGetSummarySubAccountFuturesAccountV2(
+    params: ISubAccountsGetSummarySubAccountFuturesAccountV2Parameters
+  ) {
+    return this.connector<
+      ISubAccountsGetSummarySubAccountFuturesAccountV2Parameters,
+      ISubAccountsGetSummarySubAccountFuturesAccountV2
+    >(
+      "/sapi/v2/sub-account/futures/accountSummary",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  subAccountsEnableLeverageTokenSubAccount(this: Binance.Api, params: ISubAccountsEnableLeverageTokenSubAccountParameters) {
-    return this.sendRequest<ISubAccountsEnableLeverageTokenSubAccountParameters, ISubAccountsEnableLeverageTokenSubAccount>(
-      '/sapi/v1/sub-account/blvt/enable',
+  subAccountsGetFuturesPositionRiskSubAccountV2(
+    params: ISubAccountsGetFuturesPositionRiskSubAccountV2Parameters
+  ) {
+    return this.connector<
+      ISubAccountsGetFuturesPositionRiskSubAccountV2Parameters,
+      ISubAccountsGetFuturesPositionRiskSubAccountV2
+    >(
+      "/sapi/v2/sub-account/futures/positionRisk",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  /**
+   * Warning: This function hasn't been tested.
+   */
+  subAccountsEnableLeverageTokenSubAccount(
+    params: ISubAccountsEnableLeverageTokenSubAccountParameters
+  ) {
+    return this.connector<
+      ISubAccountsEnableLeverageTokenSubAccountParameters,
+      ISubAccountsEnableLeverageTokenSubAccount
+    >(
+      "/sapi/v1/sub-account/blvt/enable",
+      params,
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 }
@@ -461,7 +632,8 @@ export interface ISubAccountsAssetsBalance {
   locked: number;
 }
 
-export interface ISubAccountsCreateVirtualSubAccountParameters extends Binance.IRequestParameters {
+export interface ISubAccountsCreateVirtualSubAccountParameters
+  extends IRequestParameters {
   subAccountString: string;
 }
 
@@ -469,7 +641,8 @@ export interface ISubAccountsCreateVirtualSubAccount {
   email: string;
 }
 
-export interface ISubAccountsQuerySubAccountListSAPIParameters extends Binance.IRequestParameters {
+export interface ISubAccountsQuerySubAccountListSAPIParameters
+  extends IRequestParameters {
   email?: string;
   isFreeze?: string;
   page?: number;
@@ -486,7 +659,8 @@ export interface ISubAccountsQuerySubAccountListSAPIItem {
   createTime: number;
 }
 
-export interface ISubAccountsQuerySubAccountListParameters extends Binance.IRequestParameters {
+export interface ISubAccountsQuerySubAccountListParameters
+  extends IRequestParameters {
   email?: string;
   status?: string;
   page?: number;
@@ -507,7 +681,8 @@ export interface ISubAccountsQuerySubAccountListItem {
   createTime: number;
 }
 
-export interface ISubAccountsQuerySubAccountSpotAssetTransferHistoryParameters extends Binance.IRequestParameters {
+export interface ISubAccountsQuerySubAccountSpotAssetTransferHistoryParameters
+  extends IRequestParameters {
   fromEmail?: string;
   toEmail?: string;
   startTime?: number;
@@ -531,7 +706,8 @@ export interface ISubAccountsQuerySubAccountSpotAssetTransferHistoryItem {
   time: number;
 }
 
-export interface ISubAccountsQuerySubAccountSpotAssetTransferHistorySAPIParameters extends Binance.IRequestParameters {
+export interface ISubAccountsQuerySubAccountSpotAssetTransferHistorySAPIParameters
+  extends IRequestParameters {
   fromEmail?: string;
   toEmail?: string;
   startTime?: number;
@@ -540,9 +716,11 @@ export interface ISubAccountsQuerySubAccountSpotAssetTransferHistorySAPIParamete
   limit?: number;
 }
 
-export type ISubAccountsQuerySubAccountSpotAssetTransferHistorySAPI = ISubAccountsQuerySubAccountSpotAssetTransferHistoryItem;
+export type ISubAccountsQuerySubAccountSpotAssetTransferHistorySAPI =
+  ISubAccountsQuerySubAccountSpotAssetTransferHistoryItem;
 
-export interface ISubAccountsSubAccountSpotAssetTransferParameters extends Binance.IRequestParameters {
+export interface ISubAccountsSubAccountSpotAssetTransferParameters
+  extends IRequestParameters {
   fromEmail: string;
   toEmail: string;
   asset: string;
@@ -554,9 +732,10 @@ export interface ISubAccountsSubAccountSpotAssetTransfer {
   success: boolean;
 }
 
-export interface ISubAccountsQuerySubAccountFuturesAssetTransferHistoryParameters extends Binance.IRequestParameters {
+export interface ISubAccountsQuerySubAccountFuturesAssetTransferHistoryParameters
+  extends IRequestParameters {
   email: string;
-  futuresType: Binance.EFuturesType;
+  futuresType: EFuturesType;
   startTime?: number;
   endTime?: number;
   page?: number;
@@ -564,7 +743,7 @@ export interface ISubAccountsQuerySubAccountFuturesAssetTransferHistoryParameter
 }
 
 export interface ISubAccountsQuerySubAccountFuturesAssetTransferHistory {
-  futuresType: Binance.EFuturesType;
+  futuresType: EFuturesType;
   success: boolean;
   transfers: ISubAccountsQuerySubAccountFuturesAssetTransferHistoryItem[];
 }
@@ -578,12 +757,13 @@ export interface ISubAccountsQuerySubAccountFuturesAssetTransferHistoryItem {
   time: number;
 }
 
-export interface ISubAccountsSubAccountFuturesAssetTransferParameters extends Binance.IRequestParameters {
+export interface ISubAccountsSubAccountFuturesAssetTransferParameters
+  extends IRequestParameters {
   fromEmail: string;
   toEmail: string;
   asset: string;
   amount: number;
-  futuresType: Binance.EFuturesType;
+  futuresType: EFuturesType;
 }
 
 export interface ISubAccountsSubAccountFuturesAssetTransfer {
@@ -591,7 +771,8 @@ export interface ISubAccountsSubAccountFuturesAssetTransfer {
   success: boolean;
 }
 
-export interface ISubAccountsQuerySubAccountAssetsParameters extends Binance.IRequestParameters {
+export interface ISubAccountsQuerySubAccountAssetsParameters
+  extends IRequestParameters {
   email: string;
 }
 
@@ -606,7 +787,8 @@ export interface ISubAccountsQuerySubAccountAssetsItem {
   locked: number;
 }
 
-export interface ISubAccountsQuerySubAccountAssetsSAPIParameters extends Binance.IRequestParameters {
+export interface ISubAccountsQuerySubAccountAssetsSAPIParameters
+  extends IRequestParameters {
   email: string;
 }
 
@@ -620,7 +802,8 @@ export interface ISubAccountsQuerySubAccountAssetsSAPIItem {
   locked: number;
 }
 
-export interface ISubAccountsQuerySubAccountSpotAssetsSummaryParameters extends Binance.IRequestParameters {
+export interface ISubAccountsQuerySubAccountSpotAssetsSummaryParameters
+  extends IRequestParameters {
   email?: string;
   page?: number;
   size?: number;
@@ -637,7 +820,8 @@ export interface ISubAccountsQuerySubAccountSpotAssetsSummaryItem {
   totalAsset: string;
 }
 
-export interface ISubAccountsGetSubAccountDepositAddressParameters extends Binance.IRequestParameters {
+export interface ISubAccountsGetSubAccountDepositAddressParameters
+  extends IRequestParameters {
   email: string;
   coin: string;
   network?: string;
@@ -650,7 +834,8 @@ export interface ISubAccountsGetSubAccountDepositAddress {
   url: string;
 }
 
-export interface ISubAccountsGetSubAccountDepositAddressHistoryParameters extends Binance.IRequestParameters {
+export interface ISubAccountsGetSubAccountDepositAddressHistoryParameters
+  extends IRequestParameters {
   email: string;
   coin?: string;
   status?: number;
@@ -673,7 +858,8 @@ export interface ISubAccountsGetSubAccountDepositAddressHistory {
   confirmTimes: string;
 }
 
-export interface ISubAccountsGetSubAccountStatusMarginFuturesParameters extends Binance.IRequestParameters {
+export interface ISubAccountsGetSubAccountStatusMarginFuturesParameters
+  extends IRequestParameters {
   email?: string;
 }
 
@@ -687,7 +873,8 @@ export interface ISubAccountsGetSubAccountStatusMarginFutures {
   mobile: number;
 }
 
-export interface ISubAccountsEnableMarginSubAccountParameters extends Binance.IRequestParameters {
+export interface ISubAccountsEnableMarginSubAccountParameters
+  extends IRequestParameters {
   email: string;
 }
 
@@ -696,7 +883,8 @@ export interface ISubAccountsEnableMarginSubAccount {
   isMarginEnabled: boolean;
 }
 
-export interface ISubAccountsGetDetailSubAccountMarginAccountParameters extends Binance.IRequestParameters {
+export interface ISubAccountsGetDetailSubAccountMarginAccountParameters
+  extends IRequestParameters {
   email: string;
 }
 
@@ -723,7 +911,8 @@ export interface ISubAccountsGetDetailSubAccountMarginAccountAsset {
   netAsset: string;
 }
 
-export interface ISubAccountsGetSummarySubAccountMarginAccountParameters extends Binance.IRequestParameters {}
+export interface ISubAccountsGetSummarySubAccountMarginAccountParameters
+  extends IRequestParameters {}
 
 export interface ISubAccountsGetSummarySubAccountMarginAccount {
   totalAssetOfBtc: string;
@@ -739,7 +928,8 @@ export interface ISubAccountsGetSummarySubAccountMarginAccountItem {
   totalNetAssetOfBtc: string;
 }
 
-export interface ISubAccountsEnableFuturesSubAccountParameters extends Binance.IRequestParameters {
+export interface ISubAccountsEnableFuturesSubAccountParameters
+  extends IRequestParameters {
   email: string;
 }
 
@@ -748,7 +938,8 @@ export interface ISubAccountsEnableFuturesSubAccount {
   isFuturesEnabled: boolean;
 }
 
-export interface ISubAccountsGetDetailSubAccountFuturesAccountParameters extends Binance.IRequestParameters {
+export interface ISubAccountsGetDetailSubAccountFuturesAccountParameters
+  extends IRequestParameters {
   email: string;
 }
 
@@ -783,7 +974,8 @@ export interface ISubAccountsGetDetailSubAccountFuturesAccountItem {
   walletBalance: string;
 }
 
-export interface ISubAccountsGetSummarySubAccountFuturesAccountParameters extends Binance.IRequestParameters {}
+export interface ISubAccountsGetSummarySubAccountFuturesAccountParameters
+  extends IRequestParameters {}
 
 export interface ISubAccountsGetSummarySubAccountFuturesAccount {
   totalInitialMargin: string;
@@ -809,7 +1001,8 @@ export interface ISubAccountsGetSummarySubAccountFuturesAccountItem {
   asset: string;
 }
 
-export interface ISubAccountsGetFuturesPositionRiskSubAccountParameters extends Binance.IRequestParameters {
+export interface ISubAccountsGetFuturesPositionRiskSubAccountParameters
+  extends IRequestParameters {
   email: string;
 }
 
@@ -824,7 +1017,8 @@ export interface ISubAccountsGetFuturesPositionRiskSubAccount {
   unrealizedProfit: string;
 }
 
-export interface ISubAccountsFuturesTransferSubAccountParameters extends Binance.IRequestParameters {
+export interface ISubAccountsFuturesTransferSubAccountParameters
+  extends IRequestParameters {
   email: string;
   asset: string;
   amount: number;
@@ -835,7 +1029,8 @@ export interface ISubAccountsFuturesTransferSubAccount {
   txnId: string;
 }
 
-export interface ISubAccountsMarginTransferSubAccountParameters extends Binance.IRequestParameters {
+export interface ISubAccountsMarginTransferSubAccountParameters
+  extends IRequestParameters {
   email: string;
   asset: string;
   amount: number;
@@ -846,7 +1041,8 @@ export interface ISubAccountsMarginTransferSubAccount {
   txnId: string;
 }
 
-export interface ISubAccountsTransferSubAccountSameMasterParameters extends Binance.IRequestParameters {
+export interface ISubAccountsTransferSubAccountSameMasterParameters
+  extends IRequestParameters {
   toEmail: string;
   asset: string;
   amount: number;
@@ -857,7 +1053,8 @@ export interface ISubAccountsTransferSubAccountSameMaster {
   txnId: string;
 }
 
-export interface ISubAccountsTransferToMasterParameters extends Binance.IRequestParameters {
+export interface ISubAccountsTransferToMasterParameters
+  extends IRequestParameters {
   asset: string;
   amount: number;
   type: number;
@@ -867,7 +1064,8 @@ export interface ISubAccountsTransferToMaster {
   txnId: string;
 }
 
-export interface ISubAccountsSubAccountTransferHistoryParameters extends Binance.IRequestParameters {
+export interface ISubAccountsSubAccountTransferHistoryParameters
+  extends IRequestParameters {
   asset?: string;
   type?: number;
   startTime?: number;
@@ -888,11 +1086,12 @@ export interface ISubAccountsSubAccountTransferHistory {
   time: number;
 }
 
-export interface ISubAccountsUniversalTransferParameters extends Binance.IRequestParameters {
+export interface ISubAccountsUniversalTransferParameters
+  extends IRequestParameters {
   fromEmail?: string;
   toEmail?: string;
-  fromAccountType: Binance.EAccountType;
-  toAccountType: Binance.EAccountType;
+  fromAccountType: EAccountType;
+  toAccountType: EAccountType;
   asset: string;
   amount: number;
 }
@@ -901,7 +1100,8 @@ export interface ISubAccountsUniversalTransfer {
   txnId: string;
 }
 
-export interface ISubAccountsQueryUniversalTransferHistoryParameters extends Binance.IRequestParameters {
+export interface ISubAccountsQueryUniversalTransferHistoryParameters
+  extends IRequestParameters {
   fromEmail?: string;
   toEmail?: string;
   startTime?: number;
@@ -916,15 +1116,16 @@ export interface ISubAccountsQueryUniversalTransferHistory {
   toEmail: string;
   asset: string;
   amount: string;
-  fromAccountType: Binance.EAccountType;
-  toAccountType: Binance.EAccountType;
+  fromAccountType: EAccountType;
+  toAccountType: EAccountType;
   status: string;
   createTimeStamp: number;
 }
 
-export interface ISubAccountsGetDetailSubAccountFuturesAccountV2Parameters extends Binance.IRequestParameters {
+export interface ISubAccountsGetDetailSubAccountFuturesAccountV2Parameters
+  extends IRequestParameters {
   email: string;
-  futuresType: Binance.ESubAccountFuturesType;
+  futuresType: ESubAccountFuturesType;
 }
 
 export interface ISubAccountsGetDetailSubAccountFuturesAccountV2 {
@@ -957,8 +1158,9 @@ export interface ISubAccountsGetDetailSubAccountFuturesAccountV2Item {
   walletBalance: string;
 }
 
-export interface ISubAccountsGetSummarySubAccountFuturesAccountV2Parameters extends Binance.IRequestParameters {
-  futuresTypes: Binance.ESubAccountFuturesType;
+export interface ISubAccountsGetSummarySubAccountFuturesAccountV2Parameters
+  extends IRequestParameters {
+  futuresTypes: ESubAccountFuturesType;
   page?: number;
   limit?: number;
 }
@@ -987,8 +1189,9 @@ export interface ISubAccountsGetSummarySubAccountFuturesAccountV2Item {
   asset: string;
 }
 
-export interface ISubAccountsGetFuturesPositionRiskSubAccountV2Parameters extends Binance.IRequestParameters {
-  futuresTypes: Binance.ESubAccountFuturesType;
+export interface ISubAccountsGetFuturesPositionRiskSubAccountV2Parameters
+  extends IRequestParameters {
+  futuresTypes: ESubAccountFuturesType;
   page?: number;
   limit?: number;
 }
@@ -1023,7 +1226,8 @@ export interface ISubAccountsGetFuturesPositionRiskSubAccountV2ItemCOIN {
   unrealizedProfit: string;
 }
 
-export interface ISubAccountsEnableLeverageTokenSubAccountParameters extends Binance.IRequestParameters {
+export interface ISubAccountsEnableLeverageTokenSubAccountParameters
+  extends IRequestParameters {
   emai: string;
   enableBlvt: boolean;
 }

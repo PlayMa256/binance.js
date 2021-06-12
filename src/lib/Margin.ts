@@ -1,284 +1,400 @@
-import { Binance } from '../Binance';
+import {
+  Connector,
+  EOrderResponseType,
+  EOrderSide,
+  EOrderSideEffectType,
+  EOrderStatus,
+  EOrderTimeInForce,
+  EOrderType,
+  ERequestMethod,
+  ESecurityType,
+  IRequestParameters,
+  IResponseEmpty,
+} from "../Binance";
 
 export class Margin {
-  /**
-   * Warning: This function hasn't been tested.
-   */
-  marginCrossMarginAccountTransfer(this: Binance.Api, params: IMarginCrossMarginAccountTransferParameters) {
-    return this.sendRequest<IMarginCrossMarginAccountTransferParameters, IMarginCrossMarginAccountTransfer>(
-      '/sapi/v1/margin/transfer',
-      params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.MARGIN
-    );
+  connector: Connector;
+
+  constructor(connector: Connector) {
+    this.connector = connector;
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  marginAccountBorrow(this: Binance.Api, params: IMarginAccountBorrowParameters) {
-    return this.sendRequest<IMarginAccountBorrowParameters, IMarginAccountBorrow>(
-      '/sapi/v1/margin/load',
+  marginCrossMarginAccountTransfer(
+    params: IMarginCrossMarginAccountTransferParameters
+  ) {
+    return this.connector<
+      IMarginCrossMarginAccountTransferParameters,
+      IMarginCrossMarginAccountTransfer
+    >(
+      "/sapi/v1/margin/transfer",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.MARGIN
-    );
-  }
-
-  /**
-   * Warning: This function hasn't been tested.
-   */
-  marginAccountRepay(this: Binance.Api, params: IMarginAccountRepayParameters) {
-    return this.sendRequest<IMarginAccountRepayParameters, IMarginAccountRepay>(
-      '/sapi/v1/margin/repay',
-      params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.MARGIN
-    );
-  }
-
-  marginQueryMarginAsset(this: Binance.Api, params: IMarginQueryMarginAssetParameters) {
-    return this.sendRequest<IMarginQueryMarginAssetParameters, IMarginQueryMarginAsset>(
-      '/sapi/v1/margin/asset',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA
-    );
-  }
-
-  marginQueryCrossMarginPair(this: Binance.Api, params: IMarginQueryCrossMarginPairParameters) {
-    return this.sendRequest<IMarginQueryCrossMarginPairParameters, IMarginQueryCrossMarginPair>(
-      '/sapi/v1/margin/pair',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA
-    );
-  }
-
-  marginGetAllCrossMarginAssets(this: Binance.Api, params: Binance.IResponseEmpty = {}) {
-    return this.sendRequest<Binance.IResponseEmpty, IMarginQueryMarginAsset[]>(
-      '/sapi/v1/margin/allAssets',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA
-    );
-  }
-
-  marginGetAllCrossMarginPairs(this: Binance.Api, params: Binance.IResponseEmpty = {}) {
-    return this.sendRequest<Binance.IResponseEmpty, IMarginQueryCrossMarginPair[]>(
-      '/sapi/v1/margin/allPairs',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA
-    );
-  }
-
-  marginQueryMarginPriceIndex(this: Binance.Api, params: IMarginQueryMarginPriceIndexParameters) {
-    return this.sendRequest<IMarginQueryMarginPriceIndexParameters, IMarginQueryMarginPriceIndex>(
-      '/sapi/v1/margin/priceIndex',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.MARKET_DATA
+      ERequestMethod.POST,
+      ESecurityType.MARGIN
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  marginAccounNewOrder(this: Binance.Api, params: IMarginAccountNewOrderParameters) {
-    return this.sendRequest<IMarginAccountNewOrderParameters, IMarginAccountNewOrder>(
-      '/sapi/v1/margin/order',
+  marginAccountBorrow(params: IMarginAccountBorrowParameters) {
+    return this.connector<IMarginAccountBorrowParameters, IMarginAccountBorrow>(
+      "/sapi/v1/margin/load",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.TRADE
+      ERequestMethod.POST,
+      ESecurityType.MARGIN
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  marginAccounCancelOrder(this: Binance.Api, params: IMarginAccountCancelOrderParameters) {
-    return this.sendRequest<IMarginAccountCancelOrderParameters, IMarginAccountCancelOrder>(
-      '/sapi/v1/margin/order',
+  marginAccountRepay(params: IMarginAccountRepayParameters) {
+    return this.connector<IMarginAccountRepayParameters, IMarginAccountRepay>(
+      "/sapi/v1/margin/repay",
       params,
-      Binance.ERequestMethod.DELETE,
-      Binance.ESecurityType.TRADE
+      ERequestMethod.POST,
+      ESecurityType.MARGIN
     );
   }
 
-  marginGetCrossMarginTransferHistory(this: Binance.Api, params: IMarginGetCrossMarginTransferHistoryParameters = {}) {
-    return this.sendRequest<IMarginGetCrossMarginTransferHistoryParameters, IMarginGetCrossMarginTransferHistory>(
-      '/sapi/v1/margin/transfer',
+  marginQueryMarginAsset(params: IMarginQueryMarginAssetParameters) {
+    return this.connector<
+      IMarginQueryMarginAssetParameters,
+      IMarginQueryMarginAsset
+    >(
+      "/sapi/v1/margin/asset",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA
     );
   }
 
-  marginQueryLoanRecord(this: Binance.Api, params: IMarginQueryLoanRecordParameters) {
-    return this.sendRequest<IMarginQueryLoanRecordParameters, IMarginQueryLoanRecord>(
-      '/sapi/v1/margin/loan',
+  marginQueryCrossMarginPair(params: IMarginQueryCrossMarginPairParameters) {
+    return this.connector<
+      IMarginQueryCrossMarginPairParameters,
+      IMarginQueryCrossMarginPair
+    >(
+      "/sapi/v1/margin/pair",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA
     );
   }
 
-  marginQueryRepayRecord(this: Binance.Api, params: IMarginQueryRepayRecordParameters) {
-    return this.sendRequest<IMarginQueryRepayRecordParameters, IMarginQueryRepayRecord>(
-      '/sapi/v1/margin/repay',
+  marginGetAllCrossMarginAssets(params: IResponseEmpty = {}) {
+    return this.connector<IResponseEmpty, IMarginQueryMarginAsset[]>(
+      "/sapi/v1/margin/allAssets",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA
     );
   }
 
-  marginGetInterestHistory(this: Binance.Api, params: IMarginGetInterestHistoryParameters) {
-    return this.sendRequest<IMarginGetInterestHistoryParameters, IMarginGetInterestHistory>(
-      '/sapi/v1/margin/interestHistory',
+  marginGetAllCrossMarginPairs(params: IResponseEmpty = {}) {
+    return this.connector<IResponseEmpty, IMarginQueryCrossMarginPair[]>(
+      "/sapi/v1/margin/allPairs",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA
     );
   }
 
-  marginGetForceLiquidationHistory(this: Binance.Api, params: IMarginGetForceLiquidationHistoryParameters = {}) {
-    return this.sendRequest<IMarginGetForceLiquidationHistoryParameters, IMarginGetForceLiquidationHistory>(
-      '/sapi/v1/margin/forceLiquidationRec',
+  marginQueryMarginPriceIndex(params: IMarginQueryMarginPriceIndexParameters) {
+    return this.connector<
+      IMarginQueryMarginPriceIndexParameters,
+      IMarginQueryMarginPriceIndex
+    >(
+      "/sapi/v1/margin/priceIndex",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  marginQueryCrossMarginAccountDetails(this: Binance.Api, params: IMarginQueryCrossMarginAccountDetailsParameters = {}) {
-    return this.sendRequest<IMarginQueryCrossMarginAccountDetailsParameters, IMarginQueryCrossMarginAccountDetails>(
-      '/sapi/v1/margin/account',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  /**
-   * Warning: This function hasn't been tested.
-   */
-  marginQueryMarginAccountOrder(this: Binance.Api, params: IMarginQueryMarginAccountOrderParameters) {
-    return this.sendRequest<IMarginQueryMarginAccountOrderParameters, IMarginQueryMarginAccountOrder>(
-      '/sapi/v1/margin/order',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  marginQueryMarginAccountOpenOrder(this: Binance.Api, params: IMarginQueryMarginAccountOpenOrderParameters) {
-    return this.sendRequest<IMarginQueryMarginAccountOpenOrderParameters, IMarginQueryMarginAccountOpenOrder[]>(
-      '/sapi/v1/margin/openOrders',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  marginQueryMarginAccountAllOrder(this: Binance.Api, params: IMarginQueryMarginAccountAllOrderParameters) {
-    return this.sendRequest<IMarginQueryMarginAccountAllOrderParameters, IMarginQueryMarginAccountAllOrder[]>(
-      '/sapi/v1/margin/allOrders',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  marginQueryMarginAccountTradeList(this: Binance.Api, params: IMarginQueryMarginAccountTradeListParameters) {
-    return this.sendRequest<IMarginQueryMarginAccountTradeListParameters, IMarginQueryMarginAccountTradeList[]>(
-      '/sapi/v1/margin/myTrades',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  marginQueryMaxBorrow(this: Binance.Api, params: IMarginQueryMaxBorrowParameters) {
-    return this.sendRequest<IMarginQueryMaxBorrowParameters, IMarginQueryMaxBorrow>(
-      '/sapi/v1/margin/maxBorrowable',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  marginQueryMaxTransferOutAmount(this: Binance.Api, params: IMarginQueryMaxTransferOutAmountParameters) {
-    return this.sendRequest<IMarginQueryMaxTransferOutAmountParameters, IMarginQueryMaxTransferOutAmount>(
-      '/sapi/v1/margin/maxTransferable',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.MARKET_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  marginCreateIsolatedMarginAccount(this: Binance.Api, params: IMarginCreateIsolatedMarginAccountParameters) {
-    return this.sendRequest<IMarginCreateIsolatedMarginAccountParameters, IMarginCreateIsolatedMarginAccount>(
-      '/sapi/v1/margin/isolated/create',
+  marginAccounNewOrder(params: IMarginAccountNewOrderParameters) {
+    return this.connector<
+      IMarginAccountNewOrderParameters,
+      IMarginAccountNewOrder
+    >(
+      "/sapi/v1/margin/order",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.MARGIN
+      ERequestMethod.POST,
+      ESecurityType.TRADE
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  marginIsolatedMarginAccountTransfer(this: Binance.Api, params: IMarginIsolatedMarginAccountTransferParameters) {
-    return this.sendRequest<IMarginIsolatedMarginAccountTransferParameters, IMarginIsolatedMarginAccountTransfer>(
-      '/sapi/v1/margin/isolated/transfer',
+  marginAccounCancelOrder(params: IMarginAccountCancelOrderParameters) {
+    return this.connector<
+      IMarginAccountCancelOrderParameters,
+      IMarginAccountCancelOrder
+    >(
+      "/sapi/v1/margin/order",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.MARGIN
+      ERequestMethod.DELETE,
+      ESecurityType.TRADE
     );
   }
 
-  marginGetIsolatedMarginTransferHistory(this: Binance.Api, params: IMarginGetIsolatedMarginTransferHistoryParameters) {
-    return this.sendRequest<IMarginGetIsolatedMarginTransferHistoryParameters, IMarginGetIsolatedMarginTransferHistory>(
-      '/sapi/v1/margin/isolated/transfer',
+  marginGetCrossMarginTransferHistory(
+    params: IMarginGetCrossMarginTransferHistoryParameters = {}
+  ) {
+    return this.connector<
+      IMarginGetCrossMarginTransferHistoryParameters,
+      IMarginGetCrossMarginTransferHistory
+    >(
+      "/sapi/v1/margin/transfer",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  marginQueryIsolatedMarginAccountInfo(this: Binance.Api, params: IMarginQueryIsolatedMarginAccountInfoParameters = {}) {
-    return this.sendRequest<IMarginQueryIsolatedMarginAccountInfoParameters, IMarginQueryIsolatedMarginAccountInfo>(
-      '/sapi/v1/margin/isolated/account',
+  marginQueryLoanRecord(params: IMarginQueryLoanRecordParameters) {
+    return this.connector<
+      IMarginQueryLoanRecordParameters,
+      IMarginQueryLoanRecord
+    >(
+      "/sapi/v1/margin/loan",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  marginQueryIsolatedMarginSymbol(this: Binance.Api, params: IMarginQueryIsolatedMarginSymbolParameters) {
-    return this.sendRequest<IMarginQueryIsolatedMarginSymbolParameters, IMarginQueryIsolatedMarginSymbol>(
-      '/sapi/v1/margin/isolated/pair',
+  marginQueryRepayRecord(params: IMarginQueryRepayRecordParameters) {
+    return this.connector<
+      IMarginQueryRepayRecordParameters,
+      IMarginQueryRepayRecord
+    >(
+      "/sapi/v1/margin/repay",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  marginGetAllIsolatedMarginSymbol(this: Binance.Api, params: Binance.IResponseEmpty = {}) {
-    return this.sendRequest<Binance.IResponseEmpty, IMarginQueryIsolatedMarginSymbol[]>(
-      '/sapi/v1/margin/isolated/allPairs',
+  marginGetInterestHistory(params: IMarginGetInterestHistoryParameters) {
+    return this.connector<
+      IMarginGetInterestHistoryParameters,
+      IMarginGetInterestHistory
+    >(
+      "/sapi/v1/margin/interestHistory",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  marginGetForceLiquidationHistory(
+    params: IMarginGetForceLiquidationHistoryParameters = {}
+  ) {
+    return this.connector<
+      IMarginGetForceLiquidationHistoryParameters,
+      IMarginGetForceLiquidationHistory
+    >(
+      "/sapi/v1/margin/forceLiquidationRec",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  marginQueryCrossMarginAccountDetails(
+    params: IMarginQueryCrossMarginAccountDetailsParameters = {}
+  ) {
+    return this.connector<
+      IMarginQueryCrossMarginAccountDetailsParameters,
+      IMarginQueryCrossMarginAccountDetails
+    >(
+      "/sapi/v1/margin/account",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  /**
+   * Warning: This function hasn't been tested.
+   */
+  marginQueryMarginAccountOrder(
+    params: IMarginQueryMarginAccountOrderParameters
+  ) {
+    return this.connector<
+      IMarginQueryMarginAccountOrderParameters,
+      IMarginQueryMarginAccountOrder
+    >(
+      "/sapi/v1/margin/order",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  marginQueryMarginAccountOpenOrder(
+    params: IMarginQueryMarginAccountOpenOrderParameters
+  ) {
+    return this.connector<
+      IMarginQueryMarginAccountOpenOrderParameters,
+      IMarginQueryMarginAccountOpenOrder[]
+    >(
+      "/sapi/v1/margin/openOrders",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  marginQueryMarginAccountAllOrder(
+    params: IMarginQueryMarginAccountAllOrderParameters
+  ) {
+    return this.connector<
+      IMarginQueryMarginAccountAllOrderParameters,
+      IMarginQueryMarginAccountAllOrder[]
+    >(
+      "/sapi/v1/margin/allOrders",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  marginQueryMarginAccountTradeList(
+    params: IMarginQueryMarginAccountTradeListParameters
+  ) {
+    return this.connector<
+      IMarginQueryMarginAccountTradeListParameters,
+      IMarginQueryMarginAccountTradeList[]
+    >(
+      "/sapi/v1/margin/myTrades",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  marginQueryMaxBorrow(params: IMarginQueryMaxBorrowParameters) {
+    return this.connector<
+      IMarginQueryMaxBorrowParameters,
+      IMarginQueryMaxBorrow
+    >(
+      "/sapi/v1/margin/maxBorrowable",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  marginQueryMaxTransferOutAmount(
+    params: IMarginQueryMaxTransferOutAmountParameters
+  ) {
+    return this.connector<
+      IMarginQueryMaxTransferOutAmountParameters,
+      IMarginQueryMaxTransferOutAmount
+    >(
+      "/sapi/v1/margin/maxTransferable",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  /**
+   * Warning: This function hasn't been tested.
+   */
+  marginCreateIsolatedMarginAccount(
+    params: IMarginCreateIsolatedMarginAccountParameters
+  ) {
+    return this.connector<
+      IMarginCreateIsolatedMarginAccountParameters,
+      IMarginCreateIsolatedMarginAccount
+    >(
+      "/sapi/v1/margin/isolated/create",
+      params,
+      ERequestMethod.POST,
+      ESecurityType.MARGIN
+    );
+  }
+
+  /**
+   * Warning: This function hasn't been tested.
+   */
+  marginIsolatedMarginAccountTransfer(
+    params: IMarginIsolatedMarginAccountTransferParameters
+  ) {
+    return this.connector<
+      IMarginIsolatedMarginAccountTransferParameters,
+      IMarginIsolatedMarginAccountTransfer
+    >(
+      "/sapi/v1/margin/isolated/transfer",
+      params,
+      ERequestMethod.POST,
+      ESecurityType.MARGIN
+    );
+  }
+
+  marginGetIsolatedMarginTransferHistory(
+    params: IMarginGetIsolatedMarginTransferHistoryParameters
+  ) {
+    return this.connector<
+      IMarginGetIsolatedMarginTransferHistoryParameters,
+      IMarginGetIsolatedMarginTransferHistory
+    >(
+      "/sapi/v1/margin/isolated/transfer",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  marginQueryIsolatedMarginAccountInfo(
+    params: IMarginQueryIsolatedMarginAccountInfoParameters = {}
+  ) {
+    return this.connector<
+      IMarginQueryIsolatedMarginAccountInfoParameters,
+      IMarginQueryIsolatedMarginAccountInfo
+    >(
+      "/sapi/v1/margin/isolated/account",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  marginQueryIsolatedMarginSymbol(
+    params: IMarginQueryIsolatedMarginSymbolParameters
+  ) {
+    return this.connector<
+      IMarginQueryIsolatedMarginSymbolParameters,
+      IMarginQueryIsolatedMarginSymbol
+    >(
+      "/sapi/v1/margin/isolated/pair",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  marginGetAllIsolatedMarginSymbol(params: IResponseEmpty = {}) {
+    return this.connector<IResponseEmpty, IMarginQueryIsolatedMarginSymbol[]>(
+      "/sapi/v1/margin/isolated/allPairs",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 }
 
-export interface IMarginCrossMarginAccountTransferParameters extends Binance.IRequestParameters {
+export interface IMarginCrossMarginAccountTransferParameters
+  extends IRequestParameters {
   asset: string;
   amount: number;
   type: 1 | 2;
@@ -288,9 +404,9 @@ export interface IMarginCrossMarginAccountTransfer {
   tranId: number;
 }
 
-export interface IMarginAccountBorrowParameters extends Binance.IRequestParameters {
+export interface IMarginAccountBorrowParameters extends IRequestParameters {
   asset: string;
-  isIsolated?: 'TRUE' | 'FALSE';
+  isIsolated?: "TRUE" | "FALSE";
   symbol?: string;
   amount: number;
 }
@@ -300,7 +416,7 @@ export type IMarginAccountBorrow = IMarginCrossMarginAccountTransfer;
 export type IMarginAccountRepayParameters = IMarginAccountBorrowParameters;
 export type IMarginAccountRepay = IMarginAccountBorrow;
 
-export interface IMarginQueryMarginAssetParameters extends Binance.IRequestParameters {
+export interface IMarginQueryMarginAssetParameters extends IRequestParameters {
   asset: string;
 }
 
@@ -313,7 +429,8 @@ export interface IMarginQueryMarginAsset {
   userMinRepay: string;
 }
 
-export interface IMarginQueryCrossMarginPairParameters extends Binance.IRequestParameters {
+export interface IMarginQueryCrossMarginPairParameters
+  extends IRequestParameters {
   symbol: string;
 }
 
@@ -327,7 +444,8 @@ export interface IMarginQueryCrossMarginPair {
   isSellAllowed: boolean;
 }
 
-export type IMarginQueryMarginPriceIndexParameters = IMarginQueryCrossMarginPairParameters;
+export type IMarginQueryMarginPriceIndexParameters =
+  IMarginQueryCrossMarginPairParameters;
 
 export interface IMarginQueryMarginPriceIndex {
   calcTime: number;
@@ -335,19 +453,19 @@ export interface IMarginQueryMarginPriceIndex {
   symbol: string;
 }
 
-export interface IMarginAccountNewOrderParameters extends Binance.IRequestParameters {
+export interface IMarginAccountNewOrderParameters extends IRequestParameters {
   symbol: string;
-  isIsolated?: 'TRUE' | 'FALSE';
-  side: Binance.EOrderSide;
-  type: Binance.EOrderType;
+  isIsolated?: "TRUE" | "FALSE";
+  side: EOrderSide;
+  type: EOrderType;
   quantity: number;
   price?: number;
   stopPrice?: number;
   newClientOrderId?: string;
   icebergQty?: number;
-  newOderRespType?: Binance.EOrderResponseType;
-  sideEffectType?: Binance.EOrderSideEffectType;
-  timeInForce?: Binance.EOrderTimeInForce;
+  newOderRespType?: EOrderResponseType;
+  sideEffectType?: EOrderSideEffectType;
+  timeInForce?: EOrderTimeInForce;
 }
 
 export interface IMarginAccountNewOrder {
@@ -360,10 +478,10 @@ export interface IMarginAccountNewOrder {
   origQty?: string;
   executedQty?: string;
   cummulativeQuoteQty?: string;
-  status?: Binance.EOrderStatus;
-  timeInForce?: Binance.EOrderTimeInForce;
-  type?: Binance.EOrderType;
-  side?: Binance.EOrderSide;
+  status?: EOrderStatus;
+  timeInForce?: EOrderTimeInForce;
+  type?: EOrderType;
+  side?: EOrderSide;
   marginBuyBorrowAmount?: number;
   marginBuyBorrowAsset?: string;
   fills?: IMarginAccountNewOrderFill[];
@@ -376,9 +494,10 @@ export interface IMarginAccountNewOrderFill {
   commissionAsset: string;
 }
 
-export interface IMarginAccountCancelOrderParameters extends Binance.IRequestParameters {
+export interface IMarginAccountCancelOrderParameters
+  extends IRequestParameters {
   symbol: string;
-  isIsolated: 'TRUE' | 'FALSE';
+  isIsolated: "TRUE" | "FALSE";
   orderId?: number;
   origClientOrderId?: string;
   newClientOrderId?: string;
@@ -394,15 +513,16 @@ export interface IMarginAccountCancelOrder {
   origQty: string;
   executedQty: string;
   cummulativeQuoteQty: string;
-  status: Binance.EOrderStatus;
-  timeInForce: Binance.EOrderTimeInForce;
-  type: Binance.EOrderType;
-  side: Binance.EOrderSide;
+  status: EOrderStatus;
+  timeInForce: EOrderTimeInForce;
+  type: EOrderType;
+  side: EOrderSide;
 }
 
-export interface IMarginGetCrossMarginTransferHistoryParameters extends Binance.IRequestParameters {
+export interface IMarginGetCrossMarginTransferHistoryParameters
+  extends IRequestParameters {
   asset?: string;
-  type?: 'ROLL_IN' | 'ROLL_OUT';
+  type?: "ROLL_IN" | "ROLL_OUT";
   startTime?: number;
   endTime?: number;
   current?: number;
@@ -421,10 +541,10 @@ export interface IMarginGetCrossMarginTransferHistoryRow {
   status: string;
   timestamp: number;
   txId: number;
-  type: 'ROLL_IN' | 'ROLL_OUT';
+  type: "ROLL_IN" | "ROLL_OUT";
 }
 
-export interface IMarginQueryLoanRecordParameters extends Binance.IRequestParameters {
+export interface IMarginQueryLoanRecordParameters extends IRequestParameters {
   asset: string;
   isolatedSymbol?: string;
   txId?: number;
@@ -447,7 +567,8 @@ export interface IMarginQueryLoanRecordRow {
   status: string;
 }
 
-export type IMarginQueryRepayRecordParameters = IMarginQueryLoanRecordParameters;
+export type IMarginQueryRepayRecordParameters =
+  IMarginQueryLoanRecordParameters;
 
 export interface IMarginQueryRepayRecord {
   total: number;
@@ -465,7 +586,8 @@ export interface IMarginQueryRepayRecordRow {
   txId: number;
 }
 
-export type IMarginGetInterestHistoryParameters = IMarginQueryRepayRecordParameters;
+export type IMarginGetInterestHistoryParameters =
+  IMarginQueryRepayRecordParameters;
 
 export interface IMarginGetInterestHistory {
   total: number;
@@ -482,7 +604,8 @@ export interface IMarginGetInterestHistoryRow {
   type: string;
 }
 
-export interface IMarginGetForceLiquidationHistoryParameters extends Binance.IRequestParameters {
+export interface IMarginGetForceLiquidationHistoryParameters
+  extends IRequestParameters {
   startTime?: number;
   endTime?: number;
   isolatedSymbol?: string;
@@ -501,9 +624,9 @@ export interface IMarginGetForceLiquidationHistoryRow {
   orderId: number;
   price: string;
   qty: string;
-  side: Binance.EOrderSide;
+  side: EOrderSide;
   symbol: string;
-  timeInForce: Binance.EOrderTimeInForce;
+  timeInForce: EOrderTimeInForce;
   isIsolated: boolean;
   updatedTime: number;
 }
@@ -512,7 +635,8 @@ export interface IMarginGetForceLiquidationHistoryRow {
  * TODO: Write functions
  */
 
-export type IMarginQueryCrossMarginAccountDetailsParameters = Binance.IRequestParameters;
+export type IMarginQueryCrossMarginAccountDetailsParameters =
+  IRequestParameters;
 
 export interface IMarginQueryCrossMarginAccountDetails {
   borrowEnabled: boolean;
@@ -534,9 +658,10 @@ export interface IMarginQueryCrossMarginAccountDetailsUserAsset {
   netAsset: string;
 }
 
-export interface IMarginQueryMarginAccountOrderParameters extends Binance.IRequestParameters {
+export interface IMarginQueryMarginAccountOrderParameters
+  extends IRequestParameters {
   symbol: string;
-  isIsolated?: 'TRUE' | 'FALSE';
+  isIsolated?: "TRUE" | "FALSE";
   orderId?: string;
   origClientOrderId?: string;
 }
@@ -550,20 +675,21 @@ export interface IMarginQueryMarginAccountOrder {
   orderId: number;
   origQty: string;
   price: string;
-  side: Binance.EOrderSide;
-  status: Binance.EOrderStatus;
+  side: EOrderSide;
+  status: EOrderStatus;
   stopPrice: string;
   symbol: string;
   isIsolated: boolean;
   time: number;
-  timeInForce: Binance.EOrderTimeInForce;
-  type: Binance.EOrderType;
+  timeInForce: EOrderTimeInForce;
+  type: EOrderType;
   updateTime: number;
 }
 
-export interface IMarginQueryMarginAccountOpenOrderParameters extends Binance.IRequestParameters {
+export interface IMarginQueryMarginAccountOpenOrderParameters
+  extends IRequestParameters {
   symbol?: string;
-  isIsolated?: 'TRUE' | 'FALSE';
+  isIsolated?: "TRUE" | "FALSE";
 }
 
 export interface IMarginQueryMarginAccountOpenOrder {
@@ -575,31 +701,34 @@ export interface IMarginQueryMarginAccountOpenOrder {
   orderId: number;
   origQty: string;
   price: string;
-  side: Binance.EOrderSide;
-  status: Binance.EOrderStatus;
+  side: EOrderSide;
+  status: EOrderStatus;
   stopPrice: string;
   symbol: string;
   isIsolated: boolean;
   time: number;
-  timeInForce: Binance.EOrderTimeInForce;
-  type: Binance.EOrderType;
+  timeInForce: EOrderTimeInForce;
+  type: EOrderType;
   updateTime: number;
 }
 
-export interface IMarginQueryMarginAccountAllOrderParameters extends Binance.IRequestParameters {
+export interface IMarginQueryMarginAccountAllOrderParameters
+  extends IRequestParameters {
   symbol: string;
-  isIsolated?: 'TRUE' | 'FALSE';
+  isIsolated?: "TRUE" | "FALSE";
   orderId?: number;
   startTime?: number;
   endTime?: number;
   limit?: number;
 }
 
-export type IMarginQueryMarginAccountAllOrder = IMarginQueryMarginAccountOpenOrder;
+export type IMarginQueryMarginAccountAllOrder =
+  IMarginQueryMarginAccountOpenOrder;
 
-export interface IMarginQueryMarginAccountTradeListParameters extends Binance.IRequestParameters {
+export interface IMarginQueryMarginAccountTradeListParameters
+  extends IRequestParameters {
   symbol: string;
-  isIsolated?: 'TRUE' | 'FALSE';
+  isIsolated?: "TRUE" | "FALSE";
   startTime?: number;
   endTime?: number;
   fromId?: number;
@@ -621,7 +750,7 @@ export interface IMarginQueryMarginAccountTradeList {
   time: number;
 }
 
-export interface IMarginQueryMaxBorrowParameters extends Binance.IRequestParameters {
+export interface IMarginQueryMaxBorrowParameters extends IRequestParameters {
   asset: string;
   isolatedSymbol?: string;
 }
@@ -631,13 +760,15 @@ export interface IMarginQueryMaxBorrow {
   borrowLimit: string;
 }
 
-export type IMarginQueryMaxTransferOutAmountParameters = IMarginQueryMaxBorrowParameters;
+export type IMarginQueryMaxTransferOutAmountParameters =
+  IMarginQueryMaxBorrowParameters;
 
 export interface IMarginQueryMaxTransferOutAmount {
   amount: string;
 }
 
-export interface IMarginCreateIsolatedMarginAccountParameters extends Binance.IRequestParameters {
+export interface IMarginCreateIsolatedMarginAccountParameters
+  extends IRequestParameters {
   base: string;
   quote: string;
 }
@@ -647,11 +778,12 @@ export interface IMarginCreateIsolatedMarginAccount {
   symbol: string;
 }
 
-export interface IMarginIsolatedMarginAccountTransferParameters extends Binance.IRequestParameters {
+export interface IMarginIsolatedMarginAccountTransferParameters
+  extends IRequestParameters {
   asset: string;
   symbol: string;
-  transFrom: 'SPOT' | 'ISOLATED_MARGIN';
-  transTo: 'SPOT' | 'ISOLATED_MARGIN';
+  transFrom: "SPOT" | "ISOLATED_MARGIN";
+  transTo: "SPOT" | "ISOLATED_MARGIN";
   amount: number;
 }
 
@@ -659,11 +791,12 @@ export interface IMarginIsolatedMarginAccountTransfer {
   tranId: number;
 }
 
-export interface IMarginGetIsolatedMarginTransferHistoryParameters extends Binance.IRequestParameters {
+export interface IMarginGetIsolatedMarginTransferHistoryParameters
+  extends IRequestParameters {
   asset?: string;
   symbol: string;
-  transFrom?: 'SPOT' | 'ISOLATED_MARGIN';
-  transTo?: 'SPOT' | 'ISOLATED_MARGIN';
+  transFrom?: "SPOT" | "ISOLATED_MARGIN";
+  transTo?: "SPOT" | "ISOLATED_MARGIN";
   startTime?: number;
   endTime?: number;
   current?: number;
@@ -678,14 +811,15 @@ export interface IMarginGetIsolatedMarginTransferHistory {
 export interface IMarginGetIsolatedMarginTransferHistoryRow {
   amount: string;
   asset: string;
-  status: Binance.EOrderStatus;
+  status: EOrderStatus;
   timestamp: number;
   txId: number;
-  transFrom: 'SPOT' | 'ISOLATED_MARGIN';
-  transTo: 'SPOT' | 'ISOLATED_MARGIN';
+  transFrom: "SPOT" | "ISOLATED_MARGIN";
+  transTo: "SPOT" | "ISOLATED_MARGIN";
 }
 
-export interface IMarginQueryIsolatedMarginAccountInfoParameters extends Binance.IRequestParameters {
+export interface IMarginQueryIsolatedMarginAccountInfoParameters
+  extends IRequestParameters {
   symbols?: string;
 }
 
@@ -702,7 +836,12 @@ export interface IMarginQueryIsolatedMarginAccountInfoAsset {
   symbol: string;
   isolatedCreated: boolean;
   marginLevel: string;
-  marginLevelStatus: 'EXCESSIVE' | 'NORMAL' | 'MARGIN_CALL' | 'PRE_LIQUIDATION' | 'FORCE_LIQUIDATION';
+  marginLevelStatus:
+    | "EXCESSIVE"
+    | "NORMAL"
+    | "MARGIN_CALL"
+    | "PRE_LIQUIDATION"
+    | "FORCE_LIQUIDATION";
   marginRatio: string;
   indexPrice: string;
   liquidatePrice: string;
@@ -723,7 +862,8 @@ export interface IMarginQueryIsolatedMarginAccountInfoAssetDetail {
   totalAsset: string;
 }
 
-export interface IMarginQueryIsolatedMarginSymbolParameters extends Binance.IRequestParameters {
+export interface IMarginQueryIsolatedMarginSymbolParameters
+  extends IRequestParameters {
   symbol: string;
 }
 

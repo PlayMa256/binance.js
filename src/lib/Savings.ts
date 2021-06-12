@@ -1,148 +1,225 @@
-import { Binance } from '../Binance';
+import {
+  Connector,
+  ERequestMethod,
+  ESavingsSortBy,
+  ESavingsStatus,
+  ESavingsType,
+  ESecurityType,
+  IRequestParameters,
+} from "../Binance";
 
 export class Savings {
-  savingsGetFlexibleProductList(this: Binance.Api, params: ISavingsGetFlexibleProductListParameters = {}) {
-    return this.sendRequest<ISavingsGetFlexibleProductListParameters, ISavingsGetFlexibleProductList[]>(
-      '/sapi/v1/lending/daily/product/list',
+  connector: Connector;
+
+  constructor(connector: Connector) {
+    this.connector = connector;
+  }
+
+  savingsGetFlexibleProductList(
+    params: ISavingsGetFlexibleProductListParameters = {}
+  ) {
+    return this.connector<
+      ISavingsGetFlexibleProductListParameters,
+      ISavingsGetFlexibleProductList[]
+    >(
+      "/sapi/v1/lending/daily/product/list",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
-  savingsGetLeftDailyPurchaseQuotaFlexibleProduct(this: Binance.Api, params: ISavingsGetLeftDailyPurchaseQuotaFlexibleProductParameters) {
-    return this.sendRequest<ISavingsGetLeftDailyPurchaseQuotaFlexibleProductParameters, ISavingsGetLeftDailyPurchaseQuotaFlexibleProduct>(
-      '/sapi/v1/lending/daily/userLeftQuota',
+  savingsGetLeftDailyPurchaseQuotaFlexibleProduct(
+    params: ISavingsGetLeftDailyPurchaseQuotaFlexibleProductParameters
+  ) {
+    return this.connector<
+      ISavingsGetLeftDailyPurchaseQuotaFlexibleProductParameters,
+      ISavingsGetLeftDailyPurchaseQuotaFlexibleProduct
+    >(
+      "/sapi/v1/lending/daily/userLeftQuota",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  /**
-   * Warning: This function hasn't been tested.
-   */
-  savingsPurchaseFlexibleProduct(this: Binance.Api, params: ISavingsPurchaseFlexibleProductParameters) {
-    return this.sendRequest<ISavingsPurchaseFlexibleProductParameters, ISavingsPurchaseFlexibleProduct>(
-      '/sapi/v1/lending/daily/purchase',
-      params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  savingsGetLeftDailyRedemptionQuotaFlexibleProduct(this: Binance.Api, params: ISavingsGetLeftDailyRedemptionQuotaFlexibleProductParameters) {
-    return this.sendRequest<ISavingsGetLeftDailyRedemptionQuotaFlexibleProductParameters, ISavingsGetLeftDailyRedemptionQuotaFlexibleProduct>(
-      '/sapi/v1/lending/daily/userRedemptionQuota',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  savingsRedeemFlexibleProduct(this: Binance.Api, params: ISavingsRedeemFlexibleProductParameters) {
-    return this.sendRequest<ISavingsRedeemFlexibleProductParameters, ISavingsRedeemFlexibleProduct>(
-      '/sapi/v1/lending/daily/redeem',
+  savingsPurchaseFlexibleProduct(
+    params: ISavingsPurchaseFlexibleProductParameters
+  ) {
+    return this.connector<
+      ISavingsPurchaseFlexibleProductParameters,
+      ISavingsPurchaseFlexibleProduct
+    >(
+      "/sapi/v1/lending/daily/purchase",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 
-  savingsGetFlexibleProductPosition(this: Binance.Api, params: ISavingsGetFlexibleProductPositionParameters) {
-    return this.sendRequest<ISavingsGetFlexibleProductPositionParameters, ISavingsGetFlexibleProductPosition[]>(
-      '/sapi/v1/lending/daily/token/position',
+  savingsGetLeftDailyRedemptionQuotaFlexibleProduct(
+    params: ISavingsGetLeftDailyRedemptionQuotaFlexibleProductParameters
+  ) {
+    return this.connector<
+      ISavingsGetLeftDailyRedemptionQuotaFlexibleProductParameters,
+      ISavingsGetLeftDailyRedemptionQuotaFlexibleProduct
+    >(
+      "/sapi/v1/lending/daily/userRedemptionQuota",
       params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  savingsGetFixedActivityProjectList(this: Binance.Api, params: ISavingsGetFixedActivityProjectListParameters) {
-    return this.sendRequest<ISavingsGetFixedActivityProjectListParameters, ISavingsGetFixedActivityProjectList[]>(
-      '/sapi/v1/lending/project/list',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  /**
-   * Warning: This function hasn't been tested.
-   */
-  savingsPurchaseFixedActivityProject(this: Binance.Api, params: ISavingsPurchaseFixedActivityProjectParameters) {
-    return this.sendRequest<ISavingsPurchaseFixedActivityProjectParameters, ISavingsPurchaseFixedActivityProject>(
-      '/sapi/v1/lending/customizedFixed/purchase',
-      params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  savingsGetFixedActivityProjectPosition(this: Binance.Api, params: ISavingsGetFixedActivityProjectPositionParameters) {
-    return this.sendRequest<ISavingsGetFixedActivityProjectPositionParameters, ISavingsGetFixedActivityProjectPosition[]>(
-      '/sapi/v1/lending/project/position/list',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  savingsLendingAccount(this: Binance.Api, params: ISavingsLendingAccountParameters = {}) {
-    return this.sendRequest<ISavingsLendingAccountParameters, ISavingsLendingAccount>(
-      '/sapi/v1/lending/union/account',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  savingsGetPurchaseRecord(this: Binance.Api, params: ISavingsGetPurchaseRecordParameters) {
-    return this.sendRequest<ISavingsGetPurchaseRecordParameters, ISavingsGetPurchaseRecord[]>(
-      '/sapi/v1/lending/union/purchaseRecord',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  savingsGetRedemptionRecord(this: Binance.Api, params: ISavingsGetRedemptionRecordParameters) {
-    return this.sendRequest<ISavingsGetRedemptionRecordParameters, ISavingsGetRedemptionRecord[]>(
-      '/sapi/v1/lending/union/redemptionRecord',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
-    );
-  }
-
-  savingsGetInterestHistory(this: Binance.Api, params: ISavingsGetInterestHistoryParameters) {
-    return this.sendRequest<ISavingsGetInterestHistoryParameters, ISavingsGetInterestHistory[]>(
-      '/sapi/v1/lending/union/interestHistory',
-      params,
-      Binance.ERequestMethod.GET,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
     );
   }
 
   /**
    * Warning: This function hasn't been tested.
    */
-  savingsChangeFixedActivityPositionToDailyPosition(this: Binance.Api, params: ISavingsChangeFixedActivityPositionToDailyPositionParameters) {
-    return this.sendRequest<ISavingsChangeFixedActivityPositionToDailyPositionParameters, ISavingsChangeFixedActivityPositionToDailyPosition>(
-      '/sapi/v1/lending/positionChanged',
+  savingsRedeemFlexibleProduct(
+    params: ISavingsRedeemFlexibleProductParameters
+  ) {
+    return this.connector<
+      ISavingsRedeemFlexibleProductParameters,
+      ISavingsRedeemFlexibleProduct
+    >(
+      "/sapi/v1/lending/daily/redeem",
       params,
-      Binance.ERequestMethod.POST,
-      Binance.ESecurityType.USER_DATA
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  savingsGetFlexibleProductPosition(
+    params: ISavingsGetFlexibleProductPositionParameters
+  ) {
+    return this.connector<
+      ISavingsGetFlexibleProductPositionParameters,
+      ISavingsGetFlexibleProductPosition[]
+    >(
+      "/sapi/v1/lending/daily/token/position",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  savingsGetFixedActivityProjectList(
+    params: ISavingsGetFixedActivityProjectListParameters
+  ) {
+    return this.connector<
+      ISavingsGetFixedActivityProjectListParameters,
+      ISavingsGetFixedActivityProjectList[]
+    >(
+      "/sapi/v1/lending/project/list",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  /**
+   * Warning: This function hasn't been tested.
+   */
+  savingsPurchaseFixedActivityProject(
+    params: ISavingsPurchaseFixedActivityProjectParameters
+  ) {
+    return this.connector<
+      ISavingsPurchaseFixedActivityProjectParameters,
+      ISavingsPurchaseFixedActivityProject
+    >(
+      "/sapi/v1/lending/customizedFixed/purchase",
+      params,
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  savingsGetFixedActivityProjectPosition(
+    params: ISavingsGetFixedActivityProjectPositionParameters
+  ) {
+    return this.connector<
+      ISavingsGetFixedActivityProjectPositionParameters,
+      ISavingsGetFixedActivityProjectPosition[]
+    >(
+      "/sapi/v1/lending/project/position/list",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  savingsLendingAccount(params: ISavingsLendingAccountParameters = {}) {
+    return this.connector<
+      ISavingsLendingAccountParameters,
+      ISavingsLendingAccount
+    >(
+      "/sapi/v1/lending/union/account",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  savingsGetPurchaseRecord(params: ISavingsGetPurchaseRecordParameters) {
+    return this.connector<
+      ISavingsGetPurchaseRecordParameters,
+      ISavingsGetPurchaseRecord[]
+    >(
+      "/sapi/v1/lending/union/purchaseRecord",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  savingsGetRedemptionRecord(params: ISavingsGetRedemptionRecordParameters) {
+    return this.connector<
+      ISavingsGetRedemptionRecordParameters,
+      ISavingsGetRedemptionRecord[]
+    >(
+      "/sapi/v1/lending/union/redemptionRecord",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  savingsGetInterestHistory(params: ISavingsGetInterestHistoryParameters) {
+    return this.connector<
+      ISavingsGetInterestHistoryParameters,
+      ISavingsGetInterestHistory[]
+    >(
+      "/sapi/v1/lending/union/interestHistory",
+      params,
+      ERequestMethod.GET,
+      ESecurityType.USER_DATA
+    );
+  }
+
+  /**
+   * Warning: This function hasn't been tested.
+   */
+  savingsChangeFixedActivityPositionToDailyPosition(
+    params: ISavingsChangeFixedActivityPositionToDailyPositionParameters
+  ) {
+    return this.connector<
+      ISavingsChangeFixedActivityPositionToDailyPositionParameters,
+      ISavingsChangeFixedActivityPositionToDailyPosition
+    >(
+      "/sapi/v1/lending/positionChanged",
+      params,
+      ERequestMethod.POST,
+      ESecurityType.USER_DATA
     );
   }
 }
 
-export interface ISavingsGetFlexibleProductListParameters extends Binance.IRequestParameters {
-  status?: Binance.ESavingsStatus;
-  features?: 'ALL' | 'true';
+export interface ISavingsGetFlexibleProductListParameters
+  extends IRequestParameters {
+  status?: ESavingsStatus;
+  features?: "ALL" | "true";
 }
 
 export interface ISavingsGetFlexibleProductList {
@@ -160,7 +237,8 @@ export interface ISavingsGetFlexibleProductList {
   upLimitPerUser: string;
 }
 
-export interface ISavingsGetLeftDailyPurchaseQuotaFlexibleProductParameters extends Binance.IRequestParameters {
+export interface ISavingsGetLeftDailyPurchaseQuotaFlexibleProductParameters
+  extends IRequestParameters {
   productId: string;
 }
 
@@ -169,7 +247,8 @@ export interface ISavingsGetLeftDailyPurchaseQuotaFlexibleProduct {
   leftQuota: string;
 }
 
-export interface ISavingsPurchaseFlexibleProductParameters extends Binance.IRequestParameters {
+export interface ISavingsPurchaseFlexibleProductParameters
+  extends IRequestParameters {
   productId: string;
   amount: number;
 }
@@ -178,9 +257,10 @@ export interface ISavingsPurchaseFlexibleProduct {
   purchaseId: number;
 }
 
-export interface ISavingsGetLeftDailyRedemptionQuotaFlexibleProductParameters extends Binance.IRequestParameters {
+export interface ISavingsGetLeftDailyRedemptionQuotaFlexibleProductParameters
+  extends IRequestParameters {
   productId: string;
-  type: Binance.ESavingsType;
+  type: ESavingsType;
 }
 
 export interface ISavingsGetLeftDailyRedemptionQuotaFlexibleProduct {
@@ -190,15 +270,17 @@ export interface ISavingsGetLeftDailyRedemptionQuotaFlexibleProduct {
   minRedemptionAmount: string;
 }
 
-export interface ISavingsRedeemFlexibleProductParameters extends Binance.IRequestParameters {
+export interface ISavingsRedeemFlexibleProductParameters
+  extends IRequestParameters {
   productId: string;
   amount: number;
-  type: Binance.ESavingsType;
+  type: ESavingsType;
 }
 
 export interface ISavingsRedeemFlexibleProduct {}
 
-export interface ISavingsGetFlexibleProductPositionParameters extends Binance.IRequestParameters {
+export interface ISavingsGetFlexibleProductPositionParameters
+  extends IRequestParameters {
   asset: string;
 }
 
@@ -219,12 +301,13 @@ export interface ISavingsGetFlexibleProductPosition {
   totalInterest: string;
 }
 
-export interface ISavingsGetFixedActivityProjectListParameters extends Binance.IRequestParameters {
+export interface ISavingsGetFixedActivityProjectListParameters
+  extends IRequestParameters {
   asset?: string;
-  type: 'ACTIVITY' | 'CUSTOMIZED_FIXED';
-  status?: Binance.ESavingsStatus;
+  type: "ACTIVITY" | "CUSTOMIZED_FIXED";
+  status?: ESavingsStatus;
   isSortAsc?: boolean;
-  sortBy?: Binance.ESavingsSortBy;
+  sortBy?: ESavingsSortBy;
   current?: number;
   size?: number;
 }
@@ -248,7 +331,8 @@ export interface ISavingsGetFixedActivityProjectList {
   withAreaLimitation: boolean;
 }
 
-export interface ISavingsPurchaseFixedActivityProjectParameters extends Binance.IRequestParameters {
+export interface ISavingsPurchaseFixedActivityProjectParameters
+  extends IRequestParameters {
   projectId: string;
   lot: number;
 }
@@ -257,10 +341,11 @@ export interface ISavingsPurchaseFixedActivityProject {
   purchaseId: string;
 }
 
-export interface ISavingsGetFixedActivityProjectPositionParameters extends Binance.IRequestParameters {
+export interface ISavingsGetFixedActivityProjectPositionParameters
+  extends IRequestParameters {
   asset: string;
   projectId?: string;
-  status?: 'HOLDING' | 'REDEEMED';
+  status?: "HOLDING" | "REDEEMED";
 }
 
 export interface ISavingsGetFixedActivityProjectPosition {
@@ -283,7 +368,7 @@ export interface ISavingsGetFixedActivityProjectPosition {
   type: string;
 }
 
-export interface ISavingsLendingAccountParameters extends Binance.IRequestParameters {}
+export interface ISavingsLendingAccountParameters extends IRequestParameters {}
 
 export interface ISavingsLendingAccount {
   positionAmountVos: ISavingsLendingAccountPosition[];
@@ -302,8 +387,9 @@ export interface ISavingsLendingAccountPosition {
   asset: string;
 }
 
-export interface ISavingsGetPurchaseRecordParameters extends Binance.IRequestParameters {
-  lendingType: 'DAILY' | 'ACTIVITY' | 'CUSTOMIZED_FIXED';
+export interface ISavingsGetPurchaseRecordParameters
+  extends IRequestParameters {
+  lendingType: "DAILY" | "ACTIVITY" | "CUSTOMIZED_FIXED";
   asset?: string;
   startTime?: number;
   endTime?: number;
@@ -322,8 +408,9 @@ export interface ISavingsGetPurchaseRecord {
   lot?: number;
 }
 
-export interface ISavingsGetRedemptionRecordParameters extends Binance.IRequestParameters {
-  lendingType: 'DAILY' | 'ACTIVITY' | 'CUSTOMIZED_FIXED';
+export interface ISavingsGetRedemptionRecordParameters
+  extends IRequestParameters {
+  lendingType: "DAILY" | "ACTIVITY" | "CUSTOMIZED_FIXED";
   asset?: string;
   startTime?: number;
   endTime?: number;
@@ -344,8 +431,9 @@ export interface ISavingsGetRedemptionRecord {
   type?: string;
 }
 
-export interface ISavingsGetInterestHistoryParameters extends Binance.IRequestParameters {
-  lendingType: 'DAILY' | 'ACTIVITY' | 'CUSTOMIZED_FIXED';
+export interface ISavingsGetInterestHistoryParameters
+  extends IRequestParameters {
+  lendingType: "DAILY" | "ACTIVITY" | "CUSTOMIZED_FIXED";
   asset?: string;
   startTime?: number;
   endTime?: number;
@@ -361,7 +449,8 @@ export interface ISavingsGetInterestHistory {
   time: number;
 }
 
-export interface ISavingsChangeFixedActivityPositionToDailyPositionParameters extends Binance.IRequestParameters {
+export interface ISavingsChangeFixedActivityPositionToDailyPositionParameters
+  extends IRequestParameters {
   projectId: string;
   lot: number;
   positionId?: number;
