@@ -1,4 +1,3 @@
-require("dotenv").config();
 
 import { Binance, EInterval } from "../src/Binance";
 

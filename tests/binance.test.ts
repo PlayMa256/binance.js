@@ -1,4 +1,3 @@
-require("dotenv").config();
 
 import { Binance, EOrderSide, EOrderType } from "../src/Binance";
 

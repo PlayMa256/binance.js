@@ -1,6 +1,6 @@
-import fetch = require("isomorphic-fetch");
-import hmacSHA256 = require("crypto-js/hmac-sha256");
-import WebSocket = require("ws");
+import fetch from "isomorphic-fetch";
+import hmacSHA256 from "crypto-js/hmac-sha256";
+import WebSocket from "ws";
 
 import { Wallet } from "./lib/Wallet";
 import { Market } from "./lib/Market";
@@ -63,13 +63,13 @@ export class Binance {
     this.market = new Market(this.sendRequest);
   }
 
-  sendRequest<K, T>(
+  sendRequest = <K, T>(
     url: string,
     params: K,
     method: ERequestMethod,
     securityType: ESecurityType,
     preventTimestamp: boolean = false
-  ): Promise<T> {
+  ): Promise<T> => {
     const baseUrl = this.testMode ? this.baseUrlApiTest : this.baseUrlApiLive;
 
     let populatedParams: IRequestPopulatedParameters;
@@ -115,7 +115,8 @@ export class Binance {
     });
   }
 
-  generateQuery(params: IRequestParameters): string {
+
+  generateQuery = (params: IRequestParameters): string => {
     return (
       Object.keys(params)
         //@ts-ignore
@@ -124,7 +125,7 @@ export class Binance {
     );
   }
 
-  defineSecurityType(securityType: ESecurityType): IRequestHeaders {
+  defineSecurityType = (securityType: ESecurityType): IRequestHeaders => {
     let headers: IRequestHeaders = {
       "Content-Type": "application/json;charset=UTF-8",
     };
@@ -136,7 +137,7 @@ export class Binance {
     return headers;
   }
 
-  createStream(url: string) {
+  createStream = (url: string) => {
     if (this.streams.has(url)) return this.streams.get(url);
 
     const ws = new WebSocket(`${this.baseUrlStream}${url}`);

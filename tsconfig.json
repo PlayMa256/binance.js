@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "CommonJS",
     "lib": ["es6"],
     "allowJs": true,
     "outDir": "dist",
-    "rootDir": "src",
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
@@ -14,7 +13,6 @@
     "types": ["node", "@types/jest"],
     "typeRoots": ["./node_modules/@types"],
     "sourceMap": true,
-    "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
   "include": ["src/**/*"],

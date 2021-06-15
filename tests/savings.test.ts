@@ -1,4 +1,3 @@
-require("dotenv").config();
 
 import { Binance, ESavingsType } from "../src/Binance";
 

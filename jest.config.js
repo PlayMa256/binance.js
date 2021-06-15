@@ -1,6 +1,4 @@
 module.exports = {
-  rootDir: __dirname,
-  roots: ['<rootDir>'],
   cache: true,
   verbose: true,
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
@@ -42,4 +40,5 @@ module.exports = {
     '\\.(ts|tsx)$': 'ts-jest',
     '/node_modules/((lodash-es|[^/]+/es)|rc-animate|rc-util)/.*': 'ts-jest',
   },
+  setupFiles: ["./jest-setup.js"]
 };
